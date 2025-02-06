@@ -1,0 +1,42 @@
+<head>
+
+<h1> UC Check </h1>
+</head>
+	
+<body>	
+
+
+                                <script src='https://cdn-prod.securiti.ai/consent/form-consent-sdk.js'></script>
+                                <script>window.addEventListener('load', function() {
+    FormConsentSDK.initialize({
+        codeGenMetadata:{"formPropertyId":"10","formSelector":"[id*=\"iframeIntegrationExampleForm\"]","subjectIdentifiers":[{"name":"polis","selector":"[name = \"firstName\"]","isPrimary":true},{"name":"Last Name","selector":"[name = \"lastName\"]","isPrimary":false},{"name":"Email","selector":"[name = \"email\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"IT","selector":"[name = \"IT\"]","propertyId":50959,"consentValue":"checked"}],"consentTrigger":{"action":"click","selector":"[id = \"cmp__prefcenter_submit_btn\"]"}},
+        url: 'https://app.securiti.ai/privaci/v1/',
+        authToken:'2ce7eeda-b636-4dc2-b3fb-8a19aa46339f',
+        orgId:'1',
+        onConsentSuccess: null,
+        onConsentFailure: null
+    })
+})</script>
+	
+    <section>
+        <form id="iframeIntegrationExampleForm">
+            <div class="form-group">
+                <label for="firstName">polis</label>
+                <input name="firstName" id="firstName" placeholder="Enter FirstName" />
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input name="lastName" id="lastName" placeholder="Enter LastName" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" placeholder="Enter email" />
+            </div>
+	    <div class="form-group">
+                <label for="email">IT</label>
+                <input type="checkbox" name="IT" id="IT" placeholder="Select" />
+            </div>
+	<button id="cmp__prefcenter_submit_btn" type="submit" class="cmp-form-submit-button">Submit</button>
+    </section>
+
+</body>
