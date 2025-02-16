@@ -1,124 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .checkbox-group {
+            margin-top: 10px;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            display: inline;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
 <body>
 
-<h1>Get an Instant Personal Loan</h1>
-<h3>Apply Now!!</h3>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form action="submit_form.php" method="post">
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required>
 
-<form action="/action_page.php">
-  <label for="fname">First name:</label>
-  <input type="text" id="fname" name="fname"><br><br>
-  <label for="lname">Last name :</label>
-  <input type="text" id="lname" name="lname"><br><br>
-  <label for="fname">Email ID  :</label>
-  <input type="text" id="fname" name="email"><br><br>
-  <label for="fname">Mobile               :</label>
-  <input type="text" id="fname" name="mobile"><br><br>
-  
-  <label class="container">I Accept the Terms and Conditions of IndusInd Bank. I Confirm I a am a Major and Resident of India.
-  <input type="checkbox">
-  <span class="checkmark"></span>
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required>
 
-</form>
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" required>
 
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit number" required>
 
+            <label>Preferred Communication:</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="emailOpt" name="comm_pref[]" value="Email">
+                <label for="emailOpt">Email</label>
 
-<style>
-/* The container */
-.container {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+                <input type="checkbox" id="adsOpt" name="comm_pref[]" value="Online Ads">
+                <label for="adsOpt">Online Ads</label>
 
-/* Hide the browser's default checkbox */
-.container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
+                <input type="checkbox" id="smsOpt" name="comm_pref[]" value="SMS">
+                <label for="smsOpt">SMS</label>
 
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-}
+                <input type="checkbox" id="whatsappOpt" name="comm_pref[]" value="WhatsApp">
+                <label for="whatsappOpt">WhatsApp</label>
+            </div>
 
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">I accept the Terms & Conditions</label>
 
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-  background-color: #2196F3;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-</style>
-
-<h3>Preferred Communication Channles</h3>
-<label class="container">Email
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-<label class="container">Online Ads
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-<label class="container">SMS
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-<label class="container">WhatsApp
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>           
-            
-            
-	<button id="cmp__prefcenter_submit_btn" type="submit" class="cmp-form-submit-button">Submit</button>
-    </section>
-    
-
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
 </body>
 </html>
+
+
 
