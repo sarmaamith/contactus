@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
+    <title>Contact Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
             background-color: #f4f4f4;
+            text-align: center;
         }
         .container {
             background: white;
@@ -17,6 +18,12 @@
             margin: auto;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .contact-image {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-width: 150px;
         }
         label {
             font-weight: bold;
@@ -39,23 +46,41 @@
             font-weight: normal;
             display: inline;
         }
+        .terms-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .terms-container input {
+            margin-right: 8px;
+        }
+        
+        /* Updated Button Styling */
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 15px;
-            background-color: #28a745;
+            background: linear-gradient(to right, #28a745, #218838); /* Green gradient */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px; /* Rounded button */
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
         }
         button:hover {
-            background-color: #218838;
+            background: linear-gradient(to right, #218838, #1e7e34); /* Darker gradient */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow */
         }
     </style>
 </head>
 <body>
+
+    <!-- Contact Us Image -->
+    <img src="https://github.com/sarmaamith/contactus/blob/main/indusind%20logo.png?raw=true">
 
     <div class="container">
         <h2>Registration Form</h2>
@@ -68,6 +93,10 @@
 
             <label for="email">Email ID:</label>
             <input type="email" id="email" name="email" required>
+
+            <!-- PAN Card Number Field -->
+            <label for="pan">PAN Card Number:</label>
+            <input type="text" id="pan" name="pan" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="Enter PAN (ABCDE1234F)" required>
 
             <label for="mobile">Mobile Number:</label>
             <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit number" required>
@@ -87,8 +116,11 @@
                 <label for="whatsappOpt">WhatsApp</label>
             </div>
 
-            <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">I accept the Terms & Conditions</label>
+            <!-- Terms & Conditions checkbox -->
+            <div class="terms-container">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I accept the Terms & Conditions</label>
+            </div>
 
             <button type="submit">Submit</button>
         </form>
