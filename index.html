@@ -60,20 +60,20 @@
             width: 100%;
             padding: 12px;
             margin-top: 15px;
-            background: linear-gradient(to right, #28a745, #218838); /* Green gradient */
+            background: linear-gradient(to right, #28a745, #218838);
             color: white;
             border: none;
-            border-radius: 25px; /* Rounded button */
+            border-radius: 25px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
         button:hover {
-            background: linear-gradient(to right, #218838, #1e7e34); /* Darker gradient */
-            transform: translateY(-2px); /* Slight lift effect */
-            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+            background: linear-gradient(to right, #218838, #1e7e34);
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -103,22 +103,22 @@
 
             <label>Preferred Communication:</label>
             <div class="checkbox-group">
-                <input type="checkbox" id="emailOpt" name="comm_pref[]" value="Email">
+                <input type="checkbox" id="emailOpt" name="prefer_email" value="Email">
                 <label for="emailOpt">Email</label>
 
-                <input type="checkbox" id="adsOpt" name="comm_pref[]" value="Online Ads">
+                <input type="checkbox" id="adsOpt" name="prefer_ads" value="Online Ads">
                 <label for="adsOpt">Online Ads</label>
 
-                <input type="checkbox" id="smsOpt" name="comm_pref[]" value="SMS">
+                <input type="checkbox" id="smsOpt" name="prefer_sms" value="SMS">
                 <label for="smsOpt">SMS</label>
 
-                <input type="checkbox" id="whatsappOpt" name="comm_pref[]" value="WhatsApp">
+                <input type="checkbox" id="whatsappOpt" name="prefer_whatsapp" value="WhatsApp">
                 <label for="whatsappOpt">WhatsApp</label>
             </div>
 
             <!-- Terms & Conditions checkbox -->
             <div class="terms-container">
-                <input type="checkbox" id="terms" name="terms" required>
+                <input type="checkbox" id="terms" name="accept_terms" required>
                 <label for="terms">I accept the Terms & Conditions</label>
             </div>
 
@@ -128,6 +128,3 @@
 
 </body>
 </html>
-
-
-
