@@ -142,16 +142,15 @@
                 <label for="terms">I accept the Terms & Conditions</label>
             </div>
 
-            <a href="#" id="consent">Submit</button>
+            <button type="submit">BALIC</button>
         </form>
     </div>
 
 
-                               
                                 <script src='https://cdn-prod.securiti.ai/consent/form-consent-sdk.js'></script>
                                 <script>window.addEventListener('load', function() {
     FormConsentSDK.initialize({
-        codeGenMetadata:{"formPropertyId":"10","formSelector":"[method*=\"post\"]","subjectIdentifiers":[{"name":"First Name:","selector":"[name = \"fname\"]","isPrimary":false},{"name":"Last Name:","selector":"[name = \"lname\"]","isPrimary":false},{"name":"Email ID:","selector":"[name = \"email\"]","isPrimary":true},{"name":"PAN Card Number:","selector":"[name = \"pan\"]","isPrimary":false},{"name":"Mobile Number:","selector":"[name = \"mobile\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"prefer_email","selector":"[name = \"prefer_email\"]","propertyId":31089,"consentValue":"checked"}],"consentTrigger":{"action":"click","selector":"Submit"}},
+        codeGenMetadata:{"formPropertyId":"10","formSelector":"[method*=\"post\"]","subjectIdentifiers":[{"name":"First Name:","selector":"[name = \"fname\"]","isPrimary":false},{"name":"Last Name:","selector":"[name = \"lname\"]","isPrimary":false},{"name":"Email ID:","selector":"[name = \"email\"]","isPrimary":true},{"name":"PAN Card Number:","selector":"[name = \"pan\"]","isPrimary":false},{"name":"Mobile Number:","selector":"[name = \"mobile\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"prefer_email","selector":"[name = \"prefer_email\"]","propertyId":31022,"consentValue":"checked"},{"type":"checkbox","name":"prefer_ads","selector":"[name = \"prefer_ads\"]","propertyId":31023,"consentValue":"checked"},{"type":"checkbox","name":"prefer_sms","selector":"[name = \"prefer_sms\"]","propertyId":31024,"consentValue":"checked"},{"type":"checkbox","name":"prefer_whatsapp","selector":"[name = \"prefer_whatsapp\"]","propertyId":31025,"consentValue":"checked"},{"type":"checkbox","name":"accept_terms","selector":"[name = \"accept_terms\"]","propertyId":31026,"consentValue":"checked"}],"consentTrigger":{"action":"click","selector":"Submit"}},
         url: 'https://app.securiti.ai/privaci/v1/',
         authToken:'b9d8c1f1-88ea-4882-8d26-25d002d15767',
         orgId:'1',
