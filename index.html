@@ -149,10 +149,11 @@
 
 
                                
+
                                 <script src='https://cdn-prod.securiti.ai/consent/form-consent-sdk.js'></script>
                                 <script>window.addEventListener('load', function() {
     FormConsentSDK.initialize({
-        codeGenMetadata:{"formPropertyId":"25","formSelector":"[method*=\"post\"]","subjectIdentifiers":[{"name":"First Name:","selector":"[name = \"fname\"]","isPrimary":false},{"name":"Last Name:","selector":"[name = \"lname\"]","isPrimary":false},{"name":"Email ID:","selector":"[name = \"email\"]","isPrimary":true},{"name":"PAN Card Number:","selector":"[name = \"pan\"]","isPrimary":false},{"name":"Mobile Number:","selector":"[name = \"mobile\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"accept_terms","selector":"[name = \"accept_terms\"]","propertyId":5745,"consentValue":"checked"}],"consentTrigger":{"action":"click","selector":"[id = \"btn1\"]"}},
+        codeGenMetadata:{"formPropertyId":"25","formSelector":"[method*=\"post\"]","subjectIdentifiers":[{"name":"First Name:","selector":"[name = \"fname\"]","isPrimary":false},{"name":"Last Name:","selector":"[name = \"lname\"]","isPrimary":false},{"name":"Email ID:","selector":"[name = \"email\"]","isPrimary":true},{"name":"PAN Card Number:","selector":"[name = \"pan\"]","isPrimary":false},{"name":"Mobile Number:","selector":"[name = \"mobile\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"prefer_email","selector":"[name = \"prefer_email\"]","propertyId":5746,"consentValue":"checked"},{"type":"checkbox","name":"prefer_ads","selector":"[name = \"prefer_ads\"]","propertyId":5747,"consentValue":"checked"},{"type":"checkbox","name":"prefer_sms","selector":"[name = \"prefer_sms\"]","propertyId":5748,"consentValue":"checked"},{"type":"checkbox","name":"prefer_whatsapp","selector":"[name = \"prefer_whatsapp\"]","propertyId":5749,"consentValue":"checked"},{"type":"checkbox","name":"accept_terms","selector":"[name = \"accept_terms\"]","propertyId":5750,"consentValue":"checked"}],"consentTrigger":{"action":"click","selector":"[name = \"consent\"]"}},
         url: 'https://app.securiti.ai/privaci/v1/',
         authToken:'ba929232-efc6-41dc-b265-0ad67859eb1e',
         orgId:'1',
