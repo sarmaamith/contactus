@@ -7,23 +7,19 @@
     <title>Contact Form</title>
 
     <!-- Cookie Consent SDK -->
-   
-<!-- THIS CODE IS FOR TESTING PURPOSE ONLY, DO NOT USE IT IN PRODUCTION. 
-After adding this script, call setConsentBannerParams({uuid: <unique id> }) to set unique ID for a customer.  -->
-<script>
-(function () {
-	var s = document.createElement('script');
-	s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk-loader.js';
-	s.setAttribute('data-tenant-uuid', 'd7c23e03-a410-47f0-9f8f-122a277ab8c7');
-	s.setAttribute('data-domain-uuid', 'cca6dd89-20b2-45f1-b4d6-081e7e189ef9');
-	s.setAttribute('data-backend-url', 'https://app.securiti.ai');
-	s.setAttribute('data-securiti-staging-mode', 'true');
-	s.setAttribute('data-skip-css', 'false');
-	s.defer = true;
-	var parent_node = document.head || document.body;
-	parent_node.appendChild(s);
-})()
-</script>
+    <script defer>
+        (function () {
+            var s = document.createElement('script');
+            s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk-loader.js';
+            s.setAttribute('data-tenant-uuid', 'd7c23e03-a410-47f0-9f8f-122a277ab8c7');
+            s.setAttribute('data-domain-uuid', 'cca6dd89-20b2-45f1-b4d6-081e7e189ef9');
+            s.setAttribute('data-backend-url', 'https://app.securiti.ai');
+            s.setAttribute('data-skip-css', 'false');
+            s.defer = true;
+            var parent_node = document.head || document.body;
+            parent_node.appendChild(s);
+        })();
+    </script>
 
     <style>
         body {
@@ -57,6 +53,16 @@ After adding this script, call setConsentBannerParams({uuid: <unique id> }) to s
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+
+        .checkbox-group {
+            margin-top: 10px;
+        }
+
+        .checkbox-group label {
+            font-weight: normal;
+            display: inline;
+            margin-right: 15px;
         }
 
         .terms-container {
@@ -117,6 +123,22 @@ After adding this script, call setConsentBannerParams({uuid: <unique id> }) to s
             <label for="mobile">Mobile Number:</label>
             <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit number" required>
 
+            <!-- Preferred Communication Section -->
+            <label>Preferred Communication:</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="emailOpt" name="prefer_email" value="Email">
+                <label for="emailOpt">Email</label>
+
+                <input type="checkbox" id="adsOpt" name="prefer_ads" value="Online Ads">
+                <label for="adsOpt">Online Ads</label>
+
+                <input type="checkbox" id="smsOpt" name="prefer_sms" value="SMS">
+                <label for="smsOpt">SMS</label>
+
+                <input type="checkbox" id="whatsappOpt" name="prefer_whatsapp" value="WhatsApp">
+                <label for="whatsappOpt">WhatsApp</label>
+            </div>
+
             <!-- Terms & Conditions checkbox -->
             <div class="terms-container">
                 <input type="checkbox" id="terms" name="accept_terms" required>
@@ -154,6 +176,10 @@ After adding this script, call setConsentBannerParams({uuid: <unique id> }) to s
                         { name: "Mobile Number", selector: "[name='mobile']", isPrimary: false }
                     ],
                     consentIdentifiers: [
+                        { type: "checkbox", name: "prefer_email", selector: "[name='prefer_email']", propertyId: 5756, consentValue: "checked" },
+                        { type: "checkbox", name: "prefer_ads", selector: "[name='prefer_ads']", propertyId: 5757, consentValue: "checked" },
+                        { type: "checkbox", name: "prefer_sms", selector: "[name='prefer_sms']", propertyId: 5758, consentValue: "checked" },
+                        { type: "checkbox", name: "prefer_whatsapp", selector: "[name='prefer_whatsapp']", propertyId: 5759, consentValue: "checked" },
                         { type: "checkbox", name: "accept_terms", selector: "[name='accept_terms']", propertyId: 5760, consentValue: "checked" }
                     ],
                     consentTrigger: { action: "click", selector: "[name='consent']" }
