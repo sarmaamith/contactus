@@ -1,206 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
-
-    <!-- Cookie Consent SDK -->
-    <script defer>
-        (function () {
-            var s = document.createElement('script');
-            s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk-loader.js';
-            s.setAttribute('data-tenant-uuid', 'd7c23e03-a410-47f0-9f8f-122a277ab8c7');
-            s.setAttribute('data-domain-uuid', 'cca6dd89-20b2-45f1-b4d6-081e7e189ef9');
-            s.setAttribute('data-backend-url', 'https://app.securiti.ai');
-            s.setAttribute('data-skip-css', 'false');
-            s.defer = true;
-            var parent_node = document.head || document.body;
-            parent_node.appendChild(s);
-        })();
-    </script>
-
+    <title>Consent Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
             background-color: #f4f4f4;
-            text-align: center;
         }
-
         .container {
+            max-width: 600px;
             background: white;
             padding: 20px;
-            max-width: 400px;
-            margin: auto;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
+            margin: auto;
         }
-
+        .logo {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            display: block;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
         label {
             font-weight: bold;
             display: block;
             margin-top: 10px;
         }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"] {
+        input {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+            padding: 10px;
+            margin: 8px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-
         .checkbox-group {
-            margin-top: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 10px 0;
         }
-
+        .checkbox-group input {
+            width: auto;
+            margin-top: 5px;
+        }
         .checkbox-group label {
             font-weight: normal;
-            display: inline;
-            margin-right: 15px;
-        }
-
-        .terms-container {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .terms-container input {
-            margin-right: 8px;
-        }
-
-        /* Updated Button Styling */
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            background: linear-gradient(to right, #28a745, #218838);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            flex: 1;
         }
-
+        .privacy-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .privacy-link:hover {
+            text-decoration: underline;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
         button:hover {
-            background: linear-gradient(to right, #218838, #1e7e34);
-            transform: translateY(-2px);
-            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+            background-color: #218838;
         }
     </style>
 </head>
-
 <body>
 
-    <!-- Contact Us Image -->
-    <img src="https://github.com/sarmaamith/contactus/blob/main/indusind%20logo.png?raw=true" alt="IndusInd Logo">
+<div class="container">
+    <!-- Logo Image (Replace with Your Own Image URL) -->
+    <img src="https://github.com/sarmaamith/contactus/blob/main/indusind%20logo.png?raw=true" alt="IndusInd Logo" alt="Company Logo" class="logo">
+    
+    <h2>Consent Form</h2>
 
-    <div class="container">
-        <h2>Saving Account Registration Form</h2>
-        <form action="submit_form.php" method="post">
-            <label for="fname">First Name:</label>
-            <input type="text" id="fname" name="fname" required>
+    <form action="#" method="POST">
+        
+        <!-- Personal Information -->
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" required>
 
-            <label for="lname">Last Name:</label>
-            <input type="text" id="lname" name="lname" required>
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
 
-            <label for="email">Email ID:</label>
-            <input type="email" id="email" name="email" required>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required placeholder="Enter 10-digit phone number">
 
-            <!-- PAN Card Number Field -->
-            <label for="pan">PAN Card Number:</label>
-            <input type="text" id="pan" name="pan" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="Enter PAN (ABCDE1234F)" required>
+        <label for="pan_card">PAN Card:</label>
+        <input type="text" id="pan_card" name="pan_card" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" required placeholder="Enter PAN (e.g., ABCDE1234F)">
 
-            <label for="mobile">Mobile Number:</label>
-            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit number" required>
-
-            <!-- Preferred Communication Section -->
-            <label>Preferred Communication:</label>
+        <!-- Consent Section -->
+        <div class="consent-section">
             <div class="checkbox-group">
-                <input type="checkbox" id="emailOpt" name="prefer_email" value="Email">
-                <label for="emailOpt">Email</label>
-
-                <input type="checkbox" id="adsOpt" name="prefer_ads" value="Online Ads">
-                <label for="adsOpt">Online Ads</label>
-
-                <input type="checkbox" id="smsOpt" name="prefer_sms" value="SMS">
-                <label for="smsOpt">SMS</label>
-
-                <input type="checkbox" id="whatsappOpt" name="prefer_whatsapp" value="WhatsApp">
-                <label for="whatsappOpt">WhatsApp</label>
+                <input type="checkbox" id="consent1" name="consent1" required>
+                <label for="consent1">I have read the <a href="https://privacy-central.securiti.ai/#/notices/364fe4d8-bc20-42b6-bc57-aad5daa5dfea" target="_blank" class="privacy-link">Terms and Conditions</a> and <a href="https://privacidemo148412.app.privacycenter.cloud/#/?tab=HOME" target="_blank" class="privacy-link">Privacy Policy</a>, and I explicitly consent to the collection, use, processing, and sharing of my personal and financial data by IndusInd Bank for the purposes of processing my credit card application and offering relevant services.</label>
             </div>
 
-            <!-- Terms & Conditions checkbox -->
-            <div class="terms-container">
-                <input type="checkbox" id="terms" name="accept_terms" required>
-                <label for="terms">Barclays is committed to protecting your personal data. We will use your information for a number of different purposes, for example, to manage your account(s), to provide our products and services to you and others and to meet our legal and regulatory obligations. We may also share your information with our trusted 3rd parties for these purposes. For more detailed information on how and why we use your information, including the rights in relation to your personal data, and our legal grounds for using it, please go to Barclays Privacy Hub or you can request a copy from us.
-
-We may not be able to proceed with your application, or may later cancel this product, if you make the application whilst physically located in certain countries.
-
-Please read our terms and conditions and charges that apply to this account. For your own benefit and protection, please read these carefully before proceeding and print or save a copy for future reference. If you don't understand any point, please visit a branch for more information.
-
-Your eligible deposits with Barclays are protected by the Financial Services Compensation Scheme (FSCS), the UK's deposit guarantee scheme. The link below will take you to the FSCS Information Sheet – please read this to find out what is and isn't covered in the scheme. You can also print or save a copy for future reference. If you don't understand any point, please contact us for more information.
-
-You are also authorising us to issue you with a Barclays debit or other card to use with your account, and a PIN (Personal Identification Number), either now or in the future. You agree that we may cancel and replace your existing card with another card covered by this agreement, and which you are eligible for, at any time.</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent2" name="consent2" required>
+                <label for="consent2">I hereby grant explicit permission to IndusInd Bank to access and receive my Credit Information, including but not limited to my credit score, credit history, and any associated data, from TransUnion CIBIL (TU CIBIL) or any other authorized credit bureau, as part of the application process.</label>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit" name="consent">SUBMIT</button>
-        </form>
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent3" name="consent3" required>
+                <label for="consent3">I consent to being contacted by IndusInd Bank and its representatives via Telephone, SMS, Email or WhatsApp for the purpose of this application, service updates, or any other relevant communication regarding the product. I understand that this consent overrides any previous Do Not Contact (DNC) or National Do Not Call (NDNC) registrations I may have in place.</label>
+            </div>
 
-        <!-- Preference Center Button -->
-        <button onclick="openPreferenceCenter()">Preference Center</button>
-    </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent4" name="consent4">
+                <label for="consent4">IndusInd may reach out to share product promotional offers or marketing messages related to other products.</label>
+            </div>
 
-    <script>
-        function openPreferenceCenter() {
-            // Opens the preference center in a new tab
-            window.open("https://privacy-central.securiti.ai/#/form-access-preference/ba929232-efc6-41dc-b265-0ad67859eb1e/16f22a8c-2760-464a-8416-4f0ba75c49fb?hsl=1", "_blank");
-        }
-    </script>
+            <p><strong>I consent to be contacted by IndusInd via the following channels:</strong></p>
 
-    <!-- Consent SDK -->
-    <script src="https://cdn-prod.securiti.ai/consent/form-consent-sdk.js" defer></script>
-    <script>
-        window.addEventListener("load", function () {
-            FormConsentSDK.initialize({
-                codeGenMetadata: {
-                    formPropertyId: "25",
-                    formSelector: "[method*='post']",
-                    subjectIdentifiers: [
-                        { name: "First Name", selector: "[name='fname']", isPrimary: false },
-                        { name: "Last Name", selector: "[name='lname']", isPrimary: false },
-                        { name: "Email ID", selector: "[name='email']", isPrimary: true },
-                        { name: "PAN Card Number", selector: "[name='pan']", isPrimary: false },
-                        { name: "Mobile Number", selector: "[name='mobile']", isPrimary: false }
-                    ],
-                    consentIdentifiers: [
-                        { type: "checkbox", name: "prefer_email", selector: "[name='prefer_email']", propertyId: 5756, consentValue: "checked" },
-                        { type: "checkbox", name: "prefer_ads", selector: "[name='prefer_ads']", propertyId: 5757, consentValue: "checked" },
-                        { type: "checkbox", name: "prefer_sms", selector: "[name='prefer_sms']", propertyId: 5758, consentValue: "checked" },
-                        { type: "checkbox", name: "prefer_whatsapp", selector: "[name='prefer_whatsapp']", propertyId: 5759, consentValue: "checked" },
-                        { type: "checkbox", name: "accept_terms", selector: "[name='accept_terms']", propertyId: 5760, consentValue: "checked" }
-                    ],
-                    consentTrigger: { action: "click", selector: "[name='consent']" }
-                },
-                url: "https://app.securiti.ai/privaci/v1/",
-                authToken: "ba929232-efc6-41dc-b265-0ad67859eb1e",
-                orgId: "1",
-                onConsentSuccess: null,
-                onConsentFailure: null
-            });
-        });
-    </script>
+            <div class="checkbox-group">
+                <input type="checkbox" id="channel1" name="channel1">
+                <label for="channel1">Telephone</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="channel2" name="channel2">
+                <label for="channel2">SMS</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="channel3" name="channel3">
+                <label for="channel3">Email</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="channel4" name="channel4">
+                <label for="channel4">WhatsApp</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="nomarketing" name="nomarketing">
+                <label for="nomarketing">Do not send me marketing communications.</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent5" name="consent5" required>
+                <label for="consent5">I understand that my data will be retained by IndusInd Bank for the necessary duration as required for the processing of my application, provision of services, and in compliance with regulatory obligations.</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent6" name="consent6" required>
+                <label for="consent6">I confirm that I have attained the age of majority, and I am a resident of India. I also confirm that I am not a tax resident of any other country and am not a politically exposed person.</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Consent</button>
+    </form>
+</div>
 
 </body>
-
 </html>
