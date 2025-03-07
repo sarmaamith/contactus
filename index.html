@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+<!-- After adding this script, call setConsentBannerParams({uuid: <unique id> }) to set unique ID for a customer.  -->
+<script>
+(function () {
+	var s = document.createElement('script');
+	s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk-loader.js';
+	s.setAttribute('data-tenant-uuid', 'd7c23e03-a410-47f0-9f8f-122a277ab8c7');
+	s.setAttribute('data-domain-uuid', 'cca6dd89-20b2-45f1-b4d6-081e7e189ef9');
+	s.setAttribute('data-backend-url', 'https://app.securiti.ai');
+	s.setAttribute('data-skip-css', 'false');
+	s.defer = true;
+	var parent_node = document.head || document.body;
+	parent_node.appendChild(s);
+})()
+</script>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving Account Opening Form</title>
