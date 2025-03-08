@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- After adding this script, call setConsentBannerParams({uuid: <unique id> }) to set unique ID for a customer.  -->
-<script>
-(function () {
-	var s = document.createElement('script');
-	s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk-loader.js';
-	s.setAttribute('data-tenant-uuid', 'd7c23e03-a410-47f0-9f8f-122a277ab8c7');
-	s.setAttribute('data-domain-uuid', 'cca6dd89-20b2-45f1-b4d6-081e7e189ef9');
-	s.setAttribute('data-backend-url', 'https://app.securiti.ai');
-	s.setAttribute('data-skip-css', 'false');
-	s.defer = true;
-	var parent_node = document.head || document.body;
-	parent_node.appendChild(s);
-})()
-</script>
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving Account Opening Form</title>
@@ -32,6 +17,7 @@
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             margin: auto;
+            text-align: center;
         }
         .logo {
             width: 100%;
@@ -48,6 +34,7 @@
             font-weight: bold;
             display: block;
             margin-top: 10px;
+            text-align: left;
         }
         input {
             width: 100%;
@@ -61,6 +48,7 @@
             align-items: flex-start;
             gap: 10px;
             margin: 10px 0;
+            text-align: left;
         }
         .checkbox-group input {
             width: auto;
@@ -80,6 +68,12 @@
         .privacy-link:hover {
             text-decoration: underline;
         }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
         button {
             background-color: #28a745;
             color: white;
@@ -89,9 +83,17 @@
             cursor: pointer;
             font-size: 16px;
             width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
         }
         button:hover {
             background-color: #218838;
+        }
+        .preferences-btn {
+            background-color: #007bff;
+        }
+        .preferences-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -99,7 +101,7 @@
 
 <div class="container">
     <!-- Logo Image (Replace with Your Own Image URL) -->
-    <img src="https://github.com/sarmaamith/contactus/blob/main/indusind%20logo.png?raw=true" alt="IndusInd Logo" alt="Company Logo" alt="Company Logo" class="logo">
+    <img src="https://github.com/sarmaamith/contactus/blob/main/indusind%20logo.png?raw=true" alt="IndusInd Logo" alt="Company Logo" class="logo">
     
     <h2>Saving Account Opening Form</h2>
 
@@ -143,35 +145,6 @@
             </div>
 
             <div class="checkbox-group">
-                <input type="checkbox" id="consent4" name="consent4">
-                <label for="consent4">
-                    IndusInd may reach out to share promotional offers or marketing messages related to other products.
-                </label>
-            </div>
-
-            <p><strong>I consent to be contacted by IndusInd via the following channels:</strong></p>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="channel1" name="channel1">
-                <label for="channel1">Telephone</label>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="channel2" name="channel2">
-                <label for="channel2">SMS</label>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="channel3" name="channel3">
-                <label for="channel3">Email</label>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="channel4" name="channel4">
-                <label for="channel4">WhatsApp</label>
-            </div>
-
-            <div class="checkbox-group">
                 <input type="checkbox" id="nomarketing" name="nomarketing">
                 <label for="nomarketing">Do not send me marketing communications.</label>
             </div>
@@ -191,25 +164,16 @@
             </div>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit">Submit Application</button>
+        <!-- Buttons Section -->
+        <div class="button-container">
+            <button type="submit">Submit Application</button>
+            <a href="https://privacy-central.securiti.ai/#/form-access-preference/ba929232-efc6-41dc-b265-0ad67859eb1e/16f22a8c-2760-464a-8416-4f0ba75c49fb?hsl=1" target="_blank">
+                <button type="button" class="preferences-btn">Manage Preferences</button>
+            </a>
+        </div>
+
     </form>
 </div>
 
-
-
-                                
-                                <script src='https://cdn-prod.securiti.ai/consent/form-consent-sdk.js'></script>
-                                <script>window.addEventListener('load', function() {
-    FormConsentSDK.initialize({
-        codeGenMetadata:{"formPropertyId":"26","formSelector":"[method*=\"POST\"]","subjectIdentifiers":[{"name":"Full Name:","selector":"[name = \"full_name\"]","isPrimary":false},{"name":"Email Address:","selector":"[name = \"email\"]","isPrimary":true},{"name":"Phone Number:","selector":"[name = \"phone\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"consent1","selector":"[name = \"consent1\"]","propertyId":5834,"consentValue":"checked"},{"type":"checkbox","name":"consent2","selector":"[name = \"consent2\"]","propertyId":5835,"consentValue":"checked"},{"type":"checkbox","name":"consent3","selector":"[name = \"consent3\"]","propertyId":5836,"consentValue":"checked"},{"type":"checkbox","name":"consent4","selector":"[name = \"consent4\"]","propertyId":5837,"consentValue":"checked"},{"type":"checkbox","name":"channel1","selector":"[name = \"channel1\"]","propertyId":5838,"consentValue":"checked"},{"type":"checkbox","name":"channel2","selector":"[name = \"channel2\"]","propertyId":5839,"consentValue":"checked"},{"type":"checkbox","name":"channel3","selector":"[name = \"channel3\"]","propertyId":5840,"consentValue":"checked"},{"type":"checkbox","name":"channel4","selector":"[name = \"channel4\"]","propertyId":5841,"consentValue":"checked"},{"type":"checkbox","name":"nomarketing","selector":"[name = \"nomarketing\"]","propertyId":5842,"consentValue":"checked"},{"type":"checkbox","name":"consent5","selector":"[name = \"consent5\"]","propertyId":5843,"consentValue":"checked"},{"type":"checkbox","name":"consent6","selector":"[name = \"consent6\"]","propertyId":5844,"consentValue":"checked"}],"consentTrigger":{"action":"click","selector":"type=\"submit\""}},
-        url: 'https://app.securiti.ai/privaci/v1/',
-        authToken:'ba929232-efc6-41dc-b265-0ad67859eb1e',
-        orgId:'1',
-        onConsentSuccess: null,
-        onConsentFailure: null
-    })
-})</script>
-    
 </body>
 </html>
