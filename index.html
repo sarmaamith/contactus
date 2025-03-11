@@ -21,7 +21,7 @@
         }
         .logo {
             width: 100%;
-            max-height: 150px;
+            max-height: 100px;
             object-fit: contain;
             margin-bottom: 20px;
             display: block;
@@ -45,20 +45,23 @@
         }
         .checkbox-group {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 10px;
             margin: 10px 0;
             text-align: left;
         }
         .checkbox-group input {
             width: auto;
-            margin-top: 5px;
         }
         .checkbox-group label {
             font-weight: normal;
             cursor: pointer;
-            flex: 1;
-            text-align: justify;
+        }
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-left: 25px;
         }
         .privacy-link {
             color: #007bff;
@@ -100,8 +103,8 @@
 <body>
 
 <div class="container">
-    <!-- Logo Image (Replace with Your Own Image URL) -->
-    <img src="https://github.com/sarmaamith/contactus/blob/main/indusind%20logo.png?raw=true" alt="IndusInd Logo" alt="Company Logo" class="logo">
+    <!-- IndusInd Bank Logo -->
+    <img src="https://raw.githubusercontent.com/sarmaamith/contactus/main/indusind%20logo.png" alt="IndusInd Bank Logo" class="logo">
     
     <h2>Saving Account Opening Form</h2>
 
@@ -140,13 +143,32 @@
             <div class="checkbox-group">
                 <input type="checkbox" id="consent3" name="consent3" required>
                 <label for="consent3">
-                    I consent to being contacted by IndusInd Bank and its representatives via Telephone, SMS, Email, or WhatsApp for this application, service updates, or any other relevant communication. This consent overrides any previous Do Not Contact (DNC) or National Do Not Call (NDNC) registrations.
+                    I consent to being contacted by IndusInd Bank and its representatives via the following channels:
                 </label>
             </div>
 
-            <div class="checkbox-group">
-                <input type="checkbox" id="nomarketing" name="nomarketing">
-                <label for="nomarketing">Do not send me marketing communications.</label>
+            <!-- Communication Preferences (All in One Line) -->
+            <div class="checkbox-container">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel1" name="channel1">
+                    <label for="channel1">Telephone</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel2" name="channel2">
+                    <label for="channel2">SMS</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel3" name="channel3">
+                    <label for="channel3">Email</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel4" name="channel4">
+                    <label for="channel4">WhatsApp</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="nomarketing" name="nomarketing">
+                    <label for="nomarketing">Do not send me marketing communications.</label>
+                </div>
             </div>
 
             <div class="checkbox-group">
@@ -156,10 +178,12 @@
                 </label>
             </div>
 
+            <!-- Newly Added Last Checkbox -->
             <div class="checkbox-group">
                 <input type="checkbox" id="consent6" name="consent6" required>
                 <label for="consent6">
-                    I confirm that I have attained the age of majority, and I am a resident of India. I also confirm that I am not a tax resident of any other country and am not a politically exposed person.
+                    I confirm that I have attained the age of majority, and I am a resident of India.  
+                    I also confirm that I am not a tax resident of any other country and am not a politically exposed person.
                 </label>
             </div>
         </div>
