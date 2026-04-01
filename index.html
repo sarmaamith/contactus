@@ -215,17 +215,123 @@
 
     
 
+<script>
+// Attach an event listener to the form to handle the submit action
+document.querySelector('form').addEventListener('submit', async function(event) {
+    // Prevent the default form submission (which reloads the page)
+    event.preventDefault(); 
 
-                                <script src='https://cdn-prod.securiti.ai/consent/form-consent-sdk.js'></script>
-                                <script>window.addEventListener('load', function() {
-    FormConsentSDK.initialize({
-        codeGenMetadata:{"formPropertyId":"13","formSelector":"[method*=\"POST\"]","subjectIdentifiers":[{"name":"Full Name:","selector":"[name = \"full_name\"]","isPrimary":false},{"name":"Email Address:","selector":"[name = \"email\"]","isPrimary":true},{"name":"Phone Number:","selector":"[name = \"phone\"]","isPrimary":false}],"consentIdentifiers":[{"type":"checkbox","name":"consent1","selector":"[name = \"consent1\"]","propertyId":45307,"consentValue":"checked"},{"type":"checkbox","name":"consent2","selector":"[name = \"consent2\"]","propertyId":45308,"consentValue":"checked"},{"type":"checkbox","name":"consent3","selector":"[name = \"consent3\"]","propertyId":45309,"consentValue":"checked"},{"type":"checkbox","name":"channel1","selector":"[name = \"channel1\"]","propertyId":45310,"consentValue":"checked"},{"type":"checkbox","name":"channel2","selector":"[name = \"channel2\"]","propertyId":45311,"consentValue":"checked"},{"type":"checkbox","name":"channel3","selector":"[name = \"channel3\"]","propertyId":45312,"consentValue":"checked"},{"type":"checkbox","name":"channel4","selector":"[name = \"channel4\"]","propertyId":45313,"consentValue":"checked"},{"type":"checkbox","name":"nomarketing","selector":"[name = \"nomarketing\"]","propertyId":45314,"consentValue":"unchecked"}],"consentTrigger":{"action":"click","selector":"type=\"submit\""}},
-        url: 'https://app.securiti.ai/privaci/v1/',
-        authToken:'b9d8c1f1-88ea-4882-8d26-25d002d15767',
-        orgId:'1',
-        onConsentSuccess: null,
-        onConsentFailure: null
-    })
-})</script>
+    // 1. Capture Form Details
+    const emailValue = document.getElementById('email').value;
+    const phoneValue = document.getElementById('phone').value;
+    const full_nameValue = document.getElementById('full_name').value;
+    const pancardValue = document.getElementById('pan_card').value;
+
+    // 2. Capture Checkbox States (Returns true if checked, false if not)
+    const TandCGranted = document.getElementById('consent1').checked; // Terms & Privacy
+    const CreditInfoGranted = document.getElementById('consent2').checked; // Credit Info
+    const AllChannelsGranted = document.getElementById('consent3').checked; // Master Communication Consent
+    const DataretentionGranted = document.getElementById('consent5').checked; // Data Retention
+    const ResidentConfirmationGranted = document.getElementById('consent6').checked; // Resident & Age Confirmation
+    
+    // Channel Communication Logic:
+    const phoneChannelGranted = AllChannelsGranted || document.getElementById('channel1').checked; 
+    const smsChannelGranted = AllChannelsGranted || document.getElementById('channel2').checked; 
+    const emailChannelGranted = AllChannelsGranted || document.getElementById('channel3').checked; 
+    const whatsappChannelGranted = AllChannelsGranted || document.getElementById('channel4').checked; 
+
+    // 3. Construct the API Payload (Aligned with working test script)
+    const payload = {
+        "UUID": emailValue, 
+        "uuids": {
+            "email": emailValue,
+            "phone": phoneValue,
+            "full_name": full_nameValue,
+            "pan_card": pancardValue
+        },
+        "activity_timestamp": Math.floor(Date.now() / 1000), 
+        "consent_source": "Narayana WebForm", 
+        "consent_info": [
+            {
+                "processing_purpose_name": "Account Opening",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Terms and Privacy Policy",
+                        "consent_granted": TandCGranted
+                    },
+                    {
+                        "consent_purpose_name": "Resident and Age Confirmation",
+                        "consent_granted": ResidentConfirmationGranted
+                    }
+                ]
+            },
+            {
+                "processing_purpose_name": "Credit Check",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Credit Bureau Access",
+                        "consent_granted": CreditInfoGranted
+                    }
+                ]
+            },
+            {
+                "processing_purpose_name": "Data Lifecycle Management",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Data Retention Policy",
+                        "consent_granted": DataretentionGranted
+                    }
+                ]
+            },
+            {
+                "processing_purpose_name": "Marketing Communication",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Telephone",
+                        "consent_granted": phoneChannelGranted
+                    },
+                    {
+                        "consent_purpose_name": "SMS",
+                        "consent_granted": smsChannelGranted
+                    },
+                    {
+                        "consent_purpose_name": "Email",
+                        "consent_granted": emailChannelGranted
+                    },
+                    {
+                        "consent_purpose_name": "WhatsApp",
+                        "consent_granted": whatsappChannelGranted
+                    }
+                ]
+            }
+        ]
+    };
+
+    // 4. Make the API Call to Securiti.ai (Headers aligned with working test script)
+    try {
+        const response = await fetch('https://app.securiti.ai/privaci/v1/consentapi/consent_upload', {
+            method: 'POST',
+            headers: {
+                'X-API-Key': 'GYsPcqTmOKEXcXq7M15ElbXOsga80rk0W367rmk9',
+                'X-API-Secret': '85fzFjPye5XzO8yjXLsa9bP0Ol3zcPjl5Yd17bXM',
+                'X-TIDENT': '09f99b07-9b72-4dd3-b6b5-1009a96c2fd4',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Consent successfully uploaded:', result);
+            alert("Application submitted successfully!");
+        } else {
+            console.error('API Error:', response.status, await response.text());
+            alert("There was an error submitting your application.");
+        }
+    } catch (error) {
+        console.error('Fetch Error:', error);
+    }
+});
+</script>
 </body>
 </html>
