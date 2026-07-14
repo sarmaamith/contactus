@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- After adding this script, call setConsentBannerParams({uuid: <unique id> }) to set unique ID for a customer.  -->
+<script>
+(function () {
+	var s = document.createElement('script');
+	s.src = 'https://cdn-prod.securiti.ai/consent/cookie-consent-sdk-loader.js';
+	s.setAttribute('data-tenant-uuid', '09f99b07-9b72-4dd3-b6b5-1009a96c2fd4');
+	s.setAttribute('data-domain-uuid', 'f3611d8d-6a62-46dc-98b3-6b6737084d98');
+	s.setAttribute('data-backend-url', 'https://app.securiti.ai');
+	s.setAttribute('data-skip-css', 'false');
+	s.defer = true;
+	var parent_node = document.head || document.body;
+	parent_node.appendChild(s);
+})()
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page_title">New Connection Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            text-align: center;
+        }
+        .logo {
+            width: 100%;
+            max-height: 100px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            display: block;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .checkbox-group input {
+            width: auto;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-left: 25px;
+        }
+        .privacy-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .privacy-link:hover {
+            text-decoration: underline;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .preferences-btn {
+            background-color: #007bff;
+        }
+        .preferences-btn:hover {
+            background-color: #0056b3;
+        }
+        .guardian-section {
+            width: 100%;
+            text-align: left;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+            background-color: #fafafa;
+            box-sizing: border-box;
+        }
+        .guardian-section h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            color: #333;
+        }
+        .guardian-section .rule-ref {
+            font-size: 11px;
+            color: #777;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .guardian-section label {
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .guardian-section select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+        .guardian-section input[type="file"] {
+            padding: 6px;
+            background-color: #fff;
+        }
+        .verify-guardian-btn {
+            background-color: #6f42c1;
+        }
+        .verify-guardian-btn:hover {
+            background-color: #5a349e;
+        }
+        .submit-greyed {
+            background-color: #b0b0b0 !important;
+            color: #eee !important;
+            cursor: not-allowed !important;
+        }
+        .submit-greyed:hover {
+            background-color: #b0b0b0 !important;
+        }
+        /* Language selector - top right corner */
+        .language-selector {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .language-selector select {
+            padding: 6px 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            background-color: #fff;
+            width: auto;
+            margin: 0;
+        }
+        /* DPDPA re-consent confirmation modal */
+        .dpdpa-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+        }
+        .dpdpa-modal-overlay.active {
+            display: flex;
+        }
+        .dpdpa-modal-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 90%;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        .dpdpa-modal-box p {
+            margin: 0 0 18px 0;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+        }
+        .dpdpa-modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .dpdpa-modal-actions button {
+            width: auto;
+            max-width: none;
+            padding: 8px 24px;
+            margin-bottom: 0;
+        }
+        .dpdpa-no-btn {
+            background-color: #dc3545;
+        }
+        .dpdpa-no-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+<!-- Language Selector -->
+<div class="language-selector">
+    <label for="languageSelect" style="display:none;">Select Language</label>
+    <select id="languageSelect" name="languageSelect">
+        <option value="en" selected>English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="bn">বাংলা (Bengali)</option>
+        <option value="mr">मराठी (Marathi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="gu">ગુજરાતી (Gujarati)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+        <option value="or">ଓଡ଼ିଆ (Odia)</option>
+    </select>
+</div>
+
+<div class="container">
+    <!-- HNB Logo -->
+    <img src="https://raw.githubusercontent.com/sarmaamith/contactus/main/cd.png" alt="IDBILogo" class="logo">
+    <h2 data-i18n="heading">New connection Form</h2>
+    <form action="#" method="POST">
+        <!-- Personal Information -->
+        <label for="full_name" data-i18n="label_full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" required>
+        <label for="email" data-i18n="label_email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="phone" data-i18n="label_phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required placeholder="Enter 10-digit phone number" data-i18n-placeholder="placeholder_phone">
+        <label for="pan_card" data-i18n="label_pan">PAN Card:</label>
+        <input type="text" id="pan_card" name="pan_card" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" required placeholder="Enter PAN (e.g., JGAPS7106A)" data-i18n-placeholder="placeholder_pan">
+        <!-- Consent Section -->
+        <div class="consent-section">
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent1" name="consent1" required>
+                <label for="consent1">
+                    <span data-i18n="consent1_part1">I have read the </span><a href="https://privacy-central.securiti.ai/#/notices/364fe4d8-bc20-42b6-bc57-aad5daa5dfea" target="_blank" class="privacy-link" data-i18n="terms_link">Terms and Conditions</a><span data-i18n="consent1_part2"> and </span>
+                    <a href="https://privacidemo148412.app.privacycenter.cloud/#/?tab=HOME" target="_blank" class="privacy-link" data-i18n="privacy_link">Privacy Policy</a><span data-i18n="consent1_part3">. I explicitly consent to the collection, use, processing, and sharing of my personal and financial data by ACME Demo for processing my account opening application and offering relevant services.</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent3" name="consent3" required>
+                <label for="consent3" data-i18n="consent3">
+                    I consent to being contacted by ACME Demo and its representatives via the following channels:
+                </label>
+            </div>
+            <!-- Communication Preferences (All in One Line) -->
+            <div class="checkbox-container">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel1" name="channel1">
+                    <label for="channel1" data-i18n="channel_telephone">Telephone</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel2" name="channel2">
+                    <label for="channel2" data-i18n="channel_sms">SMS</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel3" name="channel3">
+                    <label for="channel3" data-i18n="channel_email">Email</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel4" name="channel4">
+                    <label for="channel4" data-i18n="channel_whatsapp">WhatsApp</label>
+                </div>
+             </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent5" name="consent5" required>
+                <label for="consent5" data-i18n="consent5">
+                    I understand that my data will be retained by ACME Demo for the necessary duration as required for processing my application, provision of services, and in compliance with regulatory obligations.
+                </label>
+            </div>
+            <!-- Newly Added Last Checkbox -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="consent6" name="consent6" required>
+                <label for="consent6" data-i18n="consent6">
+                    I confirm that I have attained the age of majority, and I am a resident of India.
+                    I also confirm that I am not a tax resident of any other country and am not a politically exposed person.
+                </label>
+            </div>
+            <!-- Guardian consent tick -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="minorConsentCheckbox" name="minorConsentCheckbox">
+                <label for="minorConsentCheckbox" data-i18n="guardian_tick_label">I am the guardian consenting on behalf of a minor.</label>
+            </div>
+            <!-- Parent / Guardian Verification - DPDP Rules 2025, Rule 10(1)(b)(i):
+                 identity and age details voluntarily provided by the individual -->
+            <div class="guardian-section" id="guardianSection" style="display: none;">
+                <h4 data-i18n="guardian_section_title">Parent / Guardian Verification</h4>
+                <span class="rule-ref" data-i18n="guardian_section_ruleref">Required only if the applicant is a minor (DPDP Rules 2025, Rule 10)</span>
+                <label for="guardian_name" data-i18n="guardian_label_name">Guardian Full Name:</label>
+                <input type="text" id="guardian_name" name="guardian_name" placeholder="Enter guardian's full name" data-i18n-placeholder="guardian_placeholder_name">
+                <label for="guardian_id_type" data-i18n="guardian_label_id_type">ID Type:</label>
+                <select id="guardian_id_type" name="guardian_id_type">
+                    <option value="" data-i18n="guardian_option_select_id_type">-- Select ID Type --</option>
+                    <option value="PAN" data-i18n="guardian_option_pan">PAN</option>
+                    <option value="Aadhaar" data-i18n="guardian_option_aadhaar">Aadhaar</option>
+                    <option value="Passport" data-i18n="guardian_option_passport">Passport</option>
+                    <option value="VoterID" data-i18n="guardian_option_voterid">Voter ID</option>
+                    <option value="DrivingLicence" data-i18n="guardian_option_dl">Driving Licence</option>
+                </select>
+                <label for="guardian_id_number" data-i18n="guardian_label_id_number">ID Number:</label>
+                <input type="text" id="guardian_id_number" name="guardian_id_number" placeholder="Enter ID number" data-i18n-placeholder="guardian_placeholder_id_number">
+                <label for="guardian_dob" data-i18n="guardian_label_dob">Guardian Date of Birth:</label>
+                <input type="date" id="guardian_dob" name="guardian_dob">
+                <label for="guardian_id_upload" data-i18n="guardian_label_upload">Upload ID Document (optional, for record):</label>
+                <input type="file" id="guardian_id_upload" name="guardian_id_upload" accept=".pdf,.jpg,.jpeg,.png">
+                <button type="button" class="verify-guardian-btn" id="verifyGuardianBtn" data-i18n="verify_guardian_btn">Verify Guardian</button>
+            </div>
+        </div>
+        <!-- Buttons Section -->
+        <div class="button-container">
+            <button type="submit" id="submitBtn" data-i18n="submit_btn">Submit Application</button>
+            <a href="https://privacy-central.securiti.ai/#/form-access-preference/b9d8c1f1-88ea-4882-8d26-25d002d15767/fbc0fdb6-85b2-464f-a503-0d75d535861f?hsl=1">
+                <button type="button" class="preferences-btn" data-i18n="manage_preferences_btn">Manage Preferences</button>
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- DPDPA re-consent confirmation modal -->
+<div class="dpdpa-modal-overlay" id="dpdpaModal">
+    <div class="dpdpa-modal-box">
+        <p data-i18n="dpdpa_modal_text">In light of recent changes to the DPDPA (Digital Personal Data Protection Act) policies, a new consent is being collected from you for the processing of your personal data. Do you agree to proceed?</p>
+        <div class="dpdpa-modal-actions">
+            <button type="button" class="dpdpa-no-btn" id="dpdpaNoBtn" data-i18n="dpdpa_no_btn">No</button>
+            <button type="button" id="dpdpaYesBtn" data-i18n="dpdpa_yes_btn">Yes</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// Language translations (English + 10 Indian languages).
+// NOTE: These translations were machine-generated. For production/legal use,
+// especially for consent/compliance text, have a native speaker or
+// professional translator review them before relying on them.
+// ---------------------------------------------------------------------------
+var TRANSLATIONS = {
+    en: {
+        page_title: "New Connection Form",
+        heading: "New connection Form",
+        label_full_name: "Full Name:",
+        label_email: "Email Address:",
+        label_phone: "Phone Number:",
+        placeholder_phone: "Enter 10-digit phone number",
+        label_pan: "PAN Card:",
+        placeholder_pan: "Enter PAN (e.g., JGAPS7106A)",
+        consent1_part1: "I have read the ",
+        terms_link: "Terms and Conditions",
+        consent1_part2: " and ",
+        privacy_link: "Privacy Policy",
+        consent1_part3: ". I explicitly consent to the collection, use, processing, and sharing of my personal and financial data by ACME Demo for processing my account opening application and offering relevant services.",
+        consent3: "I consent to being contacted by ACME Demo and its representatives via the following channels:",
+        channel_telephone: "Telephone",
+        channel_sms: "SMS",
+        channel_email: "Email",
+        channel_whatsapp: "WhatsApp",
+        consent5: "I understand that my data will be retained by ACME Demo for the necessary duration as required for processing my application, provision of services, and in compliance with regulatory obligations.",
+        consent6: "I confirm that I have attained the age of majority, and I am a resident of India. I also confirm that I am not a tax resident of any other country and am not a politically exposed person.",
+        guardian_tick_label: "I am the guardian consenting on behalf of a minor.",
+        guardian_section_title: "Parent / Guardian Verification",
+        guardian_section_ruleref: "Required only if the applicant is a minor (DPDP Rules 2025, Rule 10)",
+        guardian_label_name: "Guardian Full Name:",
+        guardian_placeholder_name: "Enter guardian's full name",
+        guardian_label_id_type: "ID Type:",
+        guardian_option_select_id_type: "-- Select ID Type --",
+        guardian_option_pan: "PAN",
+        guardian_option_aadhaar: "Aadhaar",
+        guardian_option_passport: "Passport",
+        guardian_option_voterid: "Voter ID",
+        guardian_option_dl: "Driving Licence",
+        guardian_label_id_number: "ID Number:",
+        guardian_placeholder_id_number: "Enter ID number",
+        guardian_label_dob: "Guardian Date of Birth:",
+        guardian_label_upload: "Upload ID Document (optional, for record):",
+        verify_guardian_btn: "Verify Guardian",
+        submit_btn: "Submit Application",
+        manage_preferences_btn: "Manage Preferences",
+        dpdpa_modal_text: "In light of recent changes to the DPDPA (Digital Personal Data Protection Act) policies, a new consent is being collected from you for the processing of your personal data. Do you agree to proceed?",
+        dpdpa_yes_btn: "Yes",
+        dpdpa_no_btn: "No"
+    },
+    hi: {
+        page_title: "नया कनेक्शन फॉर्म",
+        heading: "नया कनेक्शन फॉर्म",
+        label_full_name: "पूरा नाम:",
+        label_email: "ईमेल पता:",
+        label_phone: "फ़ोन नंबर:",
+        placeholder_phone: "10 अंकों का फ़ोन नंबर दर्ज करें",
+        label_pan: "पैन कार्ड:",
+        placeholder_pan: "पैन दर्ज करें (जैसे, JGAPS7106A)",
+        consent1_part1: "मैंने ",
+        terms_link: "नियम और शर्तें",
+        consent1_part2: " और ",
+        privacy_link: "गोपनीयता नीति",
+        consent1_part3: " पढ़ ली है। मैं अपने खाता खोलने के आवेदन को संसाधित करने और प्रासंगिक सेवाएं प्रदान करने हेतु ACME Demo द्वारा मेरे व्यक्तिगत एवं वित्तीय डेटा के संग्रह, उपयोग, प्रसंस्करण और साझाकरण के लिए स्पष्ट रूप से सहमति देता/देती हूं।",
+        consent3: "मैं ACME Demo और उसके प्रतिनिधियों द्वारा निम्नलिखित माध्यमों से संपर्क किए जाने के लिए सहमत हूं:",
+        channel_telephone: "टेलीफ़ोन",
+        channel_sms: "एसएमएस",
+        channel_email: "ईमेल",
+        channel_whatsapp: "व्हाट्सएप",
+        consent5: "मैं समझता/समझती हूं कि मेरा डेटा ACME Demo द्वारा मेरे आवेदन को संसाधित करने, सेवाएं प्रदान करने और नियामक दायित्वों के अनुपालन हेतु आवश्यक अवधि तक सुरक्षित रखा जाएगा।",
+        consent6: "मैं पुष्टि करता/करती हूं कि मैं वयस्कता की आयु प्राप्त कर चुका/चुकी हूं और भारत का निवासी हूं। मैं यह भी पुष्टि करता/करती हूं कि मैं किसी अन्य देश का कर निवासी नहीं हूं और न ही एक राजनीतिक रूप से उजागर व्यक्ति (PEP) हूं।",
+        guardian_tick_label: "मैं एक नाबालिग की ओर से सहमति देने वाला अभिभावक हूं।",
+        guardian_section_title: "अभिभावक सत्यापन",
+        guardian_section_ruleref: "केवल तभी आवश्यक है जब आवेदक नाबालिग हो (DPDP नियम 2025, नियम 10)",
+        guardian_label_name: "अभिभावक का पूरा नाम:",
+        guardian_placeholder_name: "अभिभावक का पूरा नाम दर्ज करें",
+        guardian_label_id_type: "पहचान पत्र का प्रकार:",
+        guardian_option_select_id_type: "-- पहचान पत्र का प्रकार चुनें --",
+        guardian_option_pan: "पैन",
+        guardian_option_aadhaar: "आधार",
+        guardian_option_passport: "पासपोर्ट",
+        guardian_option_voterid: "मतदाता पहचान पत्र",
+        guardian_option_dl: "ड्राइविंग लाइसेंस",
+        guardian_label_id_number: "पहचान पत्र संख्या:",
+        guardian_placeholder_id_number: "पहचान पत्र संख्या दर्ज करें",
+        guardian_label_dob: "अभिभावक की जन्मतिथि:",
+        guardian_label_upload: "पहचान दस्तावेज़ अपलोड करें (वैकल्पिक, रिकॉर्ड हेतु):",
+        verify_guardian_btn: "अभिभावक सत्यापित करें",
+        submit_btn: "आवेदन जमा करें",
+        manage_preferences_btn: "प्राथमिकताएं प्रबंधित करें",
+        dpdpa_modal_text: "DPDPA (डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम) नीतियों में हाल के बदलावों के मद्देनज़र, आपके व्यक्तिगत डेटा के प्रसंस्करण हेतु आपसे एक नई सहमति ली जा रही है। क्या आप आगे बढ़ने के लिए सहमत हैं?",
+        dpdpa_yes_btn: "हाँ",
+        dpdpa_no_btn: "नहीं"
+    },
+    bn: {
+        page_title: "নতুন সংযোগ ফর্ম",
+        heading: "নতুন সংযোগ ফর্ম",
+        label_full_name: "পুরো নাম:",
+        label_email: "ইমেল ঠিকানা:",
+        label_phone: "ফোন নম্বর:",
+        placeholder_phone: "১০ সংখ্যার ফোন নম্বর লিখুন",
+        label_pan: "প্যান কার্ড:",
+        placeholder_pan: "প্যান লিখুন (যেমন, JGAPS7106A)",
+        consent1_part1: "আমি ",
+        terms_link: "শর্তাবলী",
+        consent1_part2: " এবং ",
+        privacy_link: "গোপনীয়তা নীতি",
+        consent1_part3: " পড়েছি। আমার অ্যাকাউন্ট খোলার আবেদন প্রক্রিয়াকরণ এবং প্রাসঙ্গিক পরিষেবা প্রদানের জন্য ACME Demo দ্বারা আমার ব্যক্তিগত ও আর্থিক তথ্য সংগ্রহ, ব্যবহার, প্রক্রিয়াকরণ এবং শেয়ার করার জন্য আমি স্পষ্টভাবে সম্মতি দিচ্ছি।",
+        consent3: "আমি নিম্নলিখিত মাধ্যমে ACME Demo এবং তার প্রতিনিধিদের দ্বারা যোগাযোগ করা হতে সম্মত:",
+        channel_telephone: "টেলিফোন",
+        channel_sms: "এসএমএস",
+        channel_email: "ইমেল",
+        channel_whatsapp: "হোয়াটসঅ্যাপ",
+        consent5: "আমি বুঝতে পারছি যে আমার তথ্য ACME Demo দ্বারা আমার আবেদন প্রক্রিয়াকরণ, পরিষেবা প্রদান এবং নিয়ন্ত্রক বাধ্যবাধকতা মেনে চলার জন্য প্রয়োজনীয় সময়কাল ধরে সংরক্ষণ করা হবে।",
+        consent6: "আমি নিশ্চিত করছি যে আমি প্রাপ্তবয়স্ক হয়েছি এবং ভারতের বাসিন্দা। আমি আরও নিশ্চিত করছি যে আমি অন্য কোনো দেশের কর বাসিন্দা নই এবং একজন রাজনৈতিকভাবে প্রকাশিত ব্যক্তি (PEP) নই।",
+        guardian_tick_label: "আমি একজন নাবালকের পক্ষে সম্মতি প্রদানকারী অভিভাবক।",
+        guardian_section_title: "পিতামাতা / অভিভাবক যাচাইকরণ",
+        guardian_section_ruleref: "শুধুমাত্র আবেদনকারী নাবালক হলে প্রয়োজন (DPDP নিয়ম 2025, নিয়ম 10)",
+        guardian_label_name: "অভিভাবকের পুরো নাম:",
+        guardian_placeholder_name: "অভিভাবকের পুরো নাম লিখুন",
+        guardian_label_id_type: "পরিচয়পত্রের ধরন:",
+        guardian_option_select_id_type: "-- পরিচয়পত্রের ধরন নির্বাচন করুন --",
+        guardian_option_pan: "প্যান",
+        guardian_option_aadhaar: "আধার",
+        guardian_option_passport: "পাসপোর্ট",
+        guardian_option_voterid: "ভোটার পরিচয়পত্র",
+        guardian_option_dl: "ড্রাইভিং লাইসেন্স",
+        guardian_label_id_number: "পরিচয়পত্র নম্বর:",
+        guardian_placeholder_id_number: "পরিচয়পত্র নম্বর লিখুন",
+        guardian_label_dob: "অভিভাবকের জন্ম তারিখ:",
+        guardian_label_upload: "পরিচয়পত্র নথি আপলোড করুন (ঐচ্ছিক, রেকর্ডের জন্য):",
+        verify_guardian_btn: "অভিভাবক যাচাই করুন",
+        submit_btn: "আবেদন জমা দিন",
+        manage_preferences_btn: "পছন্দসমূহ পরিচালনা করুন",
+        dpdpa_modal_text: "DPDPA (ডিজিটাল পার্সোনাল ডেটা প্রোটেকশন অ্যাক্ট) নীতিতে সাম্প্রতিক পরিবর্তনের পরিপ্রেক্ষিতে, আপনার ব্যক্তিগত তথ্য প্রক্রিয়াকরণের জন্য আপনার কাছ থেকে একটি নতুন সম্মতি নেওয়া হচ্ছে। আপনি কি এগিয়ে যেতে সম্মত?",
+        dpdpa_yes_btn: "হ্যাঁ",
+        dpdpa_no_btn: "না"
+    },
+    mr: {
+        page_title: "नवीन कनेक्शन फॉर्म",
+        heading: "नवीन कनेक्शन फॉर्म",
+        label_full_name: "पूर्ण नाव:",
+        label_email: "ईमेल पत्ता:",
+        label_phone: "फोन नंबर:",
+        placeholder_phone: "10 अंकी फोन नंबर टाका",
+        label_pan: "पॅन कार्ड:",
+        placeholder_pan: "पॅन टाका (उदा., JGAPS7106A)",
+        consent1_part1: "मी ",
+        terms_link: "नियम आणि अटी",
+        consent1_part2: " आणि ",
+        privacy_link: "गोपनीयता धोरण",
+        consent1_part3: " वाचले आहे. माझा खाते उघडण्याचा अर्ज प्रक्रिया करण्यासाठी आणि संबंधित सेवा पुरवण्यासाठी ACME Demo द्वारे माझा वैयक्तिक व आर्थिक डेटा संकलन, वापर, प्रक्रिया आणि सामायिक करण्यास मी स्पष्टपणे संमती देतो/देते.",
+        consent3: "मी ACME Demo आणि त्यांच्या प्रतिनिधींनी खालील माध्यमांद्वारे संपर्क साधण्यास संमती देतो/देते:",
+        channel_telephone: "टेलिफोन",
+        channel_sms: "एसएमएस",
+        channel_email: "ईमेल",
+        channel_whatsapp: "व्हॉट्सअॅप",
+        consent5: "माझा अर्ज प्रक्रिया करणे, सेवा पुरवणे आणि नियामक बंधनांचे पालन करण्यासाठी आवश्यक असलेल्या कालावधीसाठी माझा डेटा ACME Demo द्वारे राखून ठेवला जाईल हे मला समजते.",
+        consent6: "मी पुष्टी करतो/करते की मी सज्ञान वयाचा/वयाची झालो/झाले आहे आणि भारताचा/भारताची रहिवासी आहे. मी हे देखील पुष्टी करतो/करते की मी इतर कोणत्याही देशाचा कर रहिवासी नाही आणि राजकीयदृष्ट्या उघड व्यक्ती (PEP) नाही.",
+        guardian_tick_label: "मी अल्पवयीन व्यक्तीच्या वतीने संमती देणारा पालक आहे.",
+        guardian_section_title: "पालक पडताळणी",
+        guardian_section_ruleref: "अर्जदार अल्पवयीन असल्यासच आवश्यक (DPDP नियम 2025, नियम 10)",
+        guardian_label_name: "पालकाचे पूर्ण नाव:",
+        guardian_placeholder_name: "पालकाचे पूर्ण नाव टाका",
+        guardian_label_id_type: "ओळखपत्राचा प्रकार:",
+        guardian_option_select_id_type: "-- ओळखपत्राचा प्रकार निवडा --",
+        guardian_option_pan: "पॅन",
+        guardian_option_aadhaar: "आधार",
+        guardian_option_passport: "पासपोर्ट",
+        guardian_option_voterid: "मतदार ओळखपत्र",
+        guardian_option_dl: "वाहन चालक परवाना",
+        guardian_label_id_number: "ओळखपत्र क्रमांक:",
+        guardian_placeholder_id_number: "ओळखपत्र क्रमांक टाका",
+        guardian_label_dob: "पालकाची जन्मतारीख:",
+        guardian_label_upload: "ओळखपत्र दस्तऐवज अपलोड करा (पर्यायी, नोंदीसाठी):",
+        verify_guardian_btn: "पालक पडताळणी करा",
+        submit_btn: "अर्ज सबमिट करा",
+        manage_preferences_btn: "प्राधान्ये व्यवस्थापित करा",
+        dpdpa_modal_text: "DPDPA (डिजिटल पर्सनल डेटा प्रोटेक्शन अ‍ॅक्ट) धोरणांमधील अलीकडील बदलांच्या अनुषंगाने, तुमच्या वैयक्तिक डेटाच्या प्रक्रियेसाठी तुमच्याकडून नवीन संमती घेतली जात आहे. तुम्ही पुढे जाण्यास सहमत आहात का?",
+        dpdpa_yes_btn: "होय",
+        dpdpa_no_btn: "नाही"
+    },
+    te: {
+        page_title: "కొత్త కనెక్షన్ ఫారం",
+        heading: "కొత్త కనెక్షన్ ఫారం",
+        label_full_name: "పూర్తి పేరు:",
+        label_email: "ఇమెయిల్ చిరునామా:",
+        label_phone: "ఫోన్ నంబర్:",
+        placeholder_phone: "10 అంకెల ఫోన్ నంబర్ నమోదు చేయండి",
+        label_pan: "పాన్ కార్డ్:",
+        placeholder_pan: "పాన్ నమోదు చేయండి (ఉదా., JGAPS7106A)",
+        consent1_part1: "నేను ",
+        terms_link: "నిబంధనలు మరియు షరతులు",
+        consent1_part2: " మరియు ",
+        privacy_link: "గోప్యతా విధానం",
+        consent1_part3: " చదివాను. నా ఖాతా తెరిచే దరఖాస్తును ప్రాసెస్ చేయడానికి మరియు సంబంధిత సేవలను అందించడానికి ACME Demo నా వ్యక్తిగత మరియు ఆర్థిక డేటాను సేకరించడం, ఉపయోగించడం, ప్రాసెస్ చేయడం మరియు పంచుకోవడం కోసం నేను స్పష్టంగా సమ్మతిస్తున్నాను.",
+        consent3: "కింది మాధ్యమాల ద్వారా ACME Demo మరియు దాని ప్రతినిధులు నన్ను సంప్రదించడానికి నేను అంగీకరిస్తున్నాను:",
+        channel_telephone: "టెలిఫోన్",
+        channel_sms: "ఎస్ఎంఎస్",
+        channel_email: "ఇమెయిల్",
+        channel_whatsapp: "వాట్సాప్",
+        consent5: "నా దరఖాస్తును ప్రాసెస్ చేయడానికి, సేవలను అందించడానికి మరియు నియంత్రణ బాధ్యతలకు అనుగుణంగా అవసరమైన కాలం వరకు నా డేటాను ACME Demo నిలుపుకుంటుందని నేను అర్థం చేసుకున్నాను.",
+        consent6: "నేను మేజర్ వయస్సు పూర్తి చేసుకున్నానని మరియు భారతదేశ నివాసిగా ఉన్నానని నిర్ధారిస్తున్నాను. నేను మరే ఇతర దేశానికి పన్ను నివాసిని కాదని మరియు రాజకీయంగా బహిర్గతమైన వ్యక్తిని (PEP) కాదని కూడా నిర్ధారిస్తున్నాను.",
+        guardian_tick_label: "నేను ఒక మైనర్ తరపున సమ్మతి తెలిపే సంరక్షకుడిని/సంరక్షకురాలిని.",
+        guardian_section_title: "తల్లిదండ్రులు / సంరక్షకుల ధృవీకరణ",
+        guardian_section_ruleref: "దరఖాస్తుదారు మైనర్ అయితేనే అవసరం (DPDP నియమాలు 2025, నియమం 10)",
+        guardian_label_name: "సంరక్షకుని పూర్తి పేరు:",
+        guardian_placeholder_name: "సంరక్షకుని పూర్తి పేరు నమోదు చేయండి",
+        guardian_label_id_type: "గుర్తింపు రకం:",
+        guardian_option_select_id_type: "-- గుర్తింపు రకాన్ని ఎంచుకోండి --",
+        guardian_option_pan: "పాన్",
+        guardian_option_aadhaar: "ఆధార్",
+        guardian_option_passport: "పాస్‌పోర్ట్",
+        guardian_option_voterid: "ఓటరు గుర్తింపు కార్డు",
+        guardian_option_dl: "డ్రైవింగ్ లైసెన్స్",
+        guardian_label_id_number: "గుర్తింపు సంఖ్య:",
+        guardian_placeholder_id_number: "గుర్తింపు సంఖ్యను నమోదు చేయండి",
+        guardian_label_dob: "సంరక్షకుని జన్మ తేదీ:",
+        guardian_label_upload: "గుర్తింపు పత్రాన్ని అప్‌లోడ్ చేయండి (ఐచ్ఛికం, రికార్డు కోసం):",
+        verify_guardian_btn: "సంరక్షకుడిని ధృవీకరించండి",
+        submit_btn: "దరఖాస్తును సమర్పించండి",
+        manage_preferences_btn: "ప్రాధాన్యతలను నిర్వహించండి",
+        dpdpa_modal_text: "DPDPA (డిజిటల్ పర్సనల్ డేటా ప్రొటెక్షన్ చట్టం) విధానాలలో ఇటీవలి మార్పుల దృష్ట్యా, మీ వ్యక్తిగత డేటా ప్రాసెసింగ్ కోసం మీ నుండి కొత్త సమ్మతి సేకరించబడుతోంది. మీరు కొనసాగించడానికి అంగీకరిస్తున్నారా?",
+        dpdpa_yes_btn: "అవును",
+        dpdpa_no_btn: "కాదు"
+    },
+    ta: {
+        page_title: "புதிய இணைப்பு படிவம்",
+        heading: "புதிய இணைப்பு படிவம்",
+        label_full_name: "முழு பெயர்:",
+        label_email: "மின்னஞ்சல் முகவரி:",
+        label_phone: "தொலைபேசி எண்:",
+        placeholder_phone: "10 இலக்க தொலைபேசி எண்ணை உள்ளிடவும்",
+        label_pan: "பான் கார்டு:",
+        placeholder_pan: "பான் எண்ணை உள்ளிடவும் (எ.கா., JGAPS7106A)",
+        consent1_part1: "நான் ",
+        terms_link: "விதிமுறைகள் மற்றும் நிபந்தனைகள்",
+        consent1_part2: " மற்றும் ",
+        privacy_link: "தனியுரிமைக் கொள்கை",
+        consent1_part3: " ஆகியவற்றை படித்தேன். எனது கணக்கு திறப்பு விண்ணப்பத்தை செயலாக்கவும், தொடர்புடைய சேவைகளை வழங்கவும் ACME Demo எனது தனிப்பட்ட மற்றும் நிதி தரவை சேகரிப்பது, பயன்படுத்துவது, செயலாக்குவது மற்றும் பகிர்வது ஆகியவற்றிற்கு நான் தெளிவாக ஒப்புதல் அளிக்கிறேன்.",
+        consent3: "பின்வரும் வழிமுறைகள் மூலம் ACME Demo மற்றும் அதன் பிரதிநிதிகள் என்னைத் தொடர்பு கொள்ள நான் ஒப்புக்கொள்கிறேன்:",
+        channel_telephone: "தொலைபேசி",
+        channel_sms: "எஸ்எம்எஸ்",
+        channel_email: "மின்னஞ்சல்",
+        channel_whatsapp: "வாட்ஸ்அப்",
+        consent5: "எனது விண்ணப்பத்தை செயலாக்குவதற்கும், சேவைகளை வழங்குவதற்கும், ஒழுங்குமுறை கடமைகளுக்கு இணங்குவதற்கும் தேவையான காலத்திற்கு எனது தரவு ACME Demo மூலம் தக்கவைக்கப்படும் என்பதை நான் புரிந்துகொள்கிறேன்.",
+        consent6: "நான் பெரியவர் வயதை அடைந்துவிட்டேன் மற்றும் இந்தியாவின் குடியிருப்பாளர் என்பதை உறுதிப்படுத்துகிறேன். நான் வேறு எந்த நாட்டின் வரி குடியிருப்பாளரும் இல்லை மற்றும் அரசியல் ரீதியாக வெளிப்படுத்தப்பட்ட நபர் (PEP) இல்லை என்பதையும் உறுதிப்படுத்துகிறேன்.",
+        guardian_tick_label: "நான் ஒரு சிறாருக்காக ஒப்புதல் அளிக்கும் பாதுகாவலர்.",
+        guardian_section_title: "பெற்றோர் / பாதுகாவலர் சரிபார்ப்பு",
+        guardian_section_ruleref: "விண்ணப்பதாரர் சிறாராக இருந்தால் மட்டுமே தேவை (DPDP விதிகள் 2025, விதி 10)",
+        guardian_label_name: "பாதுகாவலரின் முழு பெயர்:",
+        guardian_placeholder_name: "பாதுகாவலரின் முழு பெயரை உள்ளிடவும்",
+        guardian_label_id_type: "அடையாள வகை:",
+        guardian_option_select_id_type: "-- அடையாள வகையைத் தேர்ந்தெடுக்கவும் --",
+        guardian_option_pan: "பான்",
+        guardian_option_aadhaar: "ஆதார்",
+        guardian_option_passport: "பாஸ்போர்ட்",
+        guardian_option_voterid: "வாக்காளர் அடையாள அட்டை",
+        guardian_option_dl: "ஓட்டுநர் உரிமம்",
+        guardian_label_id_number: "அடையாள எண்:",
+        guardian_placeholder_id_number: "அடையாள எண்ணை உள்ளிடவும்",
+        guardian_label_dob: "பாதுகாவலரின் பிறந்த தேதி:",
+        guardian_label_upload: "அடையாள ஆவணத்தை பதிவேற்றவும் (விருப்பமானது, பதிவுக்காக):",
+        verify_guardian_btn: "பாதுகாவலரை சரிபார்க்கவும்",
+        submit_btn: "விண்ணப்பத்தை சமர்ப்பிக்கவும்",
+        manage_preferences_btn: "விருப்பங்களை நிர்வகிக்கவும்",
+        dpdpa_modal_text: "DPDPA (டிஜிட்டல் தனிநபர் தரவு பாதுகாப்புச் சட்டம்) கொள்கைகளில் சமீபத்திய மாற்றங்களின் காரணமாக, உங்கள் தனிப்பட்ட தரவை செயலாக்குவதற்கான புதிய ஒப்புதல் உங்களிடமிருந்து பெறப்படுகிறது. நீங்கள் தொடர ஒப்புக்கொள்கிறீர்களா?",
+        dpdpa_yes_btn: "ஆம்",
+        dpdpa_no_btn: "இல்லை"
+    },
+    gu: {
+        page_title: "નવું કનેક્શન ફોર્મ",
+        heading: "નવું કનેક્શન ફોર્મ",
+        label_full_name: "પૂરું નામ:",
+        label_email: "ઈમેલ સરનામું:",
+        label_phone: "ફોન નંબર:",
+        placeholder_phone: "10 અંકનો ફોન નંબર દાખલ કરો",
+        label_pan: "પાન કાર્ડ:",
+        placeholder_pan: "પાન દાખલ કરો (દા.ત., JGAPS7106A)",
+        consent1_part1: "મેં ",
+        terms_link: "નિયમો અને શરતો",
+        consent1_part2: " અને ",
+        privacy_link: "ગોપનીયતા નીતિ",
+        consent1_part3: " વાંચી લીધી છે. મારા ખાતું ખોલવાની અરજી પર પ્રક્રિયા કરવા અને સંબંધિત સેવાઓ પૂરી પાડવા માટે ACME Demo દ્વારા મારો વ્યક્તિગત અને નાણાકીય ડેટા એકત્ર, ઉપયોગ, પ્રક્રિયા અને શેર કરવા માટે હું સ્પષ્ટપણે સંમતિ આપું છું.",
+        consent3: "હું નીચેના માધ્યમો દ્વારા ACME Demo અને તેના પ્રતિનિધિઓ દ્વારા સંપર્ક કરવામાં આવવા માટે સંમત છું:",
+        channel_telephone: "ટેલિફોન",
+        channel_sms: "એસએમએસ",
+        channel_email: "ઈમેલ",
+        channel_whatsapp: "વોટ્સએપ",
+        consent5: "હું સમજું છું કે મારો ડેટા ACME Demo દ્વારા મારી અરજી પર પ્રક્રિયા કરવા, સેવાઓ પૂરી પાડવા અને નિયમનકારી જવાબદારીઓનું પાલન કરવા માટે જરૂરી સમયગાળા માટે જાળવવામાં આવશે.",
+        consent6: "હું પુષ્ટિ કરું છું કે હું પુખ્તવયનો/ની થઈ ગયો/ગઈ છું અને ભારતનો/ની નિવાસી છું. હું એ પણ પુષ્ટિ કરું છું કે હું અન્ય કોઈ દેશનો કર નિવાસી નથી અને રાજકીય રીતે ખુલ્લી વ્યક્તિ (PEP) નથી.",
+        guardian_tick_label: "હું સગીરના વતી સંમતિ આપતો/આપતી વાલી છું.",
+        guardian_section_title: "વાલી ચકાસણી",
+        guardian_section_ruleref: "ફક્ત જો અરજદાર સગીર હોય તો જ જરૂરી (DPDP નિયમો 2025, નિયમ 10)",
+        guardian_label_name: "વાલીનું પૂરું નામ:",
+        guardian_placeholder_name: "વાલીનું પૂરું નામ દાખલ કરો",
+        guardian_label_id_type: "ઓળખનો પ્રકાર:",
+        guardian_option_select_id_type: "-- ઓળખનો પ્રકાર પસંદ કરો --",
+        guardian_option_pan: "પાન",
+        guardian_option_aadhaar: "આધાર",
+        guardian_option_passport: "પાસપોર્ટ",
+        guardian_option_voterid: "મતદાર ઓળખકાર્ડ",
+        guardian_option_dl: "ડ્રાઇવિંગ લાઇસન્સ",
+        guardian_label_id_number: "ઓળખ નંબર:",
+        guardian_placeholder_id_number: "ઓળખ નંબર દાખલ કરો",
+        guardian_label_dob: "વાલીની જન્મ તારીખ:",
+        guardian_label_upload: "ઓળખ દસ્તાવેજ અપલોડ કરો (વૈકલ્પિક, રેકોર્ડ માટે):",
+        verify_guardian_btn: "વાલીની ચકાસણી કરો",
+        submit_btn: "અરજી સબમિટ કરો",
+        manage_preferences_btn: "પસંદગીઓ સંચાલિત કરો",
+        dpdpa_modal_text: "DPDPA (ડિજિટલ પર્સનલ ડેટા પ્રોટેક્શન એક્ટ) નીતિઓમાં તાજેતરના ફેરફારોને ધ્યાનમાં રાખીને, તમારા વ્યક્તિગત ડેટાની પ્રક્રિયા માટે તમારી પાસેથી નવી સંમતિ લેવામાં આવી રહી છે. શું તમે આગળ વધવા સંમત છો?",
+        dpdpa_yes_btn: "હા",
+        dpdpa_no_btn: "ના"
+    },
+    kn: {
+        page_title: "ಹೊಸ ಸಂಪರ್ಕ ಫಾರ್ಮ್",
+        heading: "ಹೊಸ ಸಂಪರ್ಕ ಫಾರ್ಮ್",
+        label_full_name: "ಪೂರ್ಣ ಹೆಸರು:",
+        label_email: "ಇಮೇಲ್ ವಿಳಾಸ:",
+        label_phone: "ಫೋನ್ ಸಂಖ್ಯೆ:",
+        placeholder_phone: "10 ಅಂಕಿಗಳ ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+        label_pan: "ಪ್ಯಾನ್ ಕಾರ್ಡ್:",
+        placeholder_pan: "ಪ್ಯಾನ್ ನಮೂದಿಸಿ (ಉದಾ., JGAPS7106A)",
+        consent1_part1: "ನಾನು ",
+        terms_link: "ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು",
+        consent1_part2: " ಮತ್ತು ",
+        privacy_link: "ಗೌಪ್ಯತಾ ನೀತಿ",
+        consent1_part3: " ಓದಿದ್ದೇನೆ. ನನ್ನ ಖಾತೆ ತೆರೆಯುವ ಅರ್ಜಿಯನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲು ಮತ್ತು ಸಂಬಂಧಿತ ಸೇವೆಗಳನ್ನು ಒದಗಿಸಲು ACME Demo ನನ್ನ ವೈಯಕ್ತಿಕ ಮತ್ತು ಆರ್ಥಿಕ ಡೇಟಾವನ್ನು ಸಂಗ್ರಹಿಸಲು, ಬಳಸಲು, ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲು ಮತ್ತು ಹಂಚಿಕೊಳ್ಳಲು ನಾನು ಸ್ಪಷ್ಟವಾಗಿ ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ.",
+        consent3: "ಈ ಕೆಳಗಿನ ಮಾಧ್ಯಮಗಳ ಮೂಲಕ ACME Demo ಮತ್ತು ಅದರ ಪ್ರತಿನಿಧಿಗಳು ನನ್ನನ್ನು ಸಂಪರ್ಕಿಸಲು ನಾನು ಒಪ್ಪುತ್ತೇನೆ:",
+        channel_telephone: "ಟೆಲಿಫೋನ್",
+        channel_sms: "ಎಸ್ಎಂಎಸ್",
+        channel_email: "ಇಮೇಲ್",
+        channel_whatsapp: "ವಾಟ್ಸಾಪ್",
+        consent5: "ನನ್ನ ಅರ್ಜಿಯನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲು, ಸೇವೆಗಳನ್ನು ಒದಗಿಸಲು ಮತ್ತು ನಿಯಂತ್ರಕ ಬಾಧ್ಯತೆಗಳನ್ನು ಪಾಲಿಸಲು ಅಗತ್ಯವಿರುವ ಅವಧಿಯವರೆಗೆ ನನ್ನ ಡೇಟಾವನ್ನು ACME Demo ಉಳಿಸಿಕೊಳ್ಳುತ್ತದೆ ಎಂದು ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ.",
+        consent6: "ನಾನು ಪ್ರಾಪ್ತ ವಯಸ್ಸನ್ನು ತಲುಪಿದ್ದೇನೆ ಮತ್ತು ಭಾರತದ ನಿವಾಸಿ ಎಂದು ದೃಢಪಡಿಸುತ್ತೇನೆ. ನಾನು ಬೇರೆ ಯಾವುದೇ ದೇಶದ ತೆರಿಗೆ ನಿವಾಸಿ ಅಲ್ಲ ಮತ್ತು ರಾಜಕೀಯವಾಗಿ ಬಹಿರಂಗಗೊಂಡ ವ್ಯಕ್ತಿ (PEP) ಅಲ್ಲ ಎಂದೂ ದೃಢಪಡಿಸುತ್ತೇನೆ.",
+        guardian_tick_label: "ನಾನು ಅಪ್ರಾಪ್ತ ವಯಸ್ಕರ ಪರವಾಗಿ ಒಪ್ಪಿಗೆ ನೀಡುತ್ತಿರುವ ಪೋಷಕ/ರಕ್ಷಕ.",
+        guardian_section_title: "ಪೋಷಕ / ರಕ್ಷಕ ಪರಿಶೀಲನೆ",
+        guardian_section_ruleref: "ಅರ್ಜಿದಾರರು ಅಪ್ರಾಪ್ತ ವಯಸ್ಕರಾಗಿದ್ದರೆ ಮಾತ್ರ ಅಗತ್ಯ (DPDP ನಿಯಮಗಳು 2025, ನಿಯಮ 10)",
+        guardian_label_name: "ಪೋಷಕರ ಪೂರ್ಣ ಹೆಸರು:",
+        guardian_placeholder_name: "ಪೋಷಕರ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+        guardian_label_id_type: "ಗುರುತಿನ ಪ್ರಕಾರ:",
+        guardian_option_select_id_type: "-- ಗುರುತಿನ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ --",
+        guardian_option_pan: "ಪ್ಯಾನ್",
+        guardian_option_aadhaar: "ಆಧಾರ್",
+        guardian_option_passport: "ಪಾಸ್‌ಪೋರ್ಟ್",
+        guardian_option_voterid: "ಮತದಾರರ ಗುರುತಿನ ಚೀಟಿ",
+        guardian_option_dl: "ಚಾಲನಾ ಪರವಾನಗಿ",
+        guardian_label_id_number: "ಗುರುತಿನ ಸಂಖ್ಯೆ:",
+        guardian_placeholder_id_number: "ಗುರುತಿನ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+        guardian_label_dob: "ಪೋಷಕರ ಜನ್ಮ ದಿನಾಂಕ:",
+        guardian_label_upload: "ಗುರುತಿನ ದಾಖಲೆಯನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ (ಐಚ್ಛಿಕ, ದಾಖಲೆಗಾಗಿ):",
+        verify_guardian_btn: "ಪೋಷಕರನ್ನು ಪರಿಶೀಲಿಸಿ",
+        submit_btn: "ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+        manage_preferences_btn: "ಆದ್ಯತೆಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
+        dpdpa_modal_text: "DPDPA (ಡಿಜಿಟಲ್ ವೈಯಕ್ತಿಕ ಡೇಟಾ ಸಂರಕ್ಷಣಾ ಕಾಯ್ದೆ) ನೀತಿಗಳಲ್ಲಿ ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳ ಹಿನ್ನೆಲೆಯಲ್ಲಿ, ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಡೇಟಾ ಪ್ರಕ್ರಿಯೆಗಾಗಿ ನಿಮ್ಮಿಂದ ಹೊಸ ಒಪ್ಪಿಗೆಯನ್ನು ಸಂಗ್ರಹಿಸಲಾಗುತ್ತಿದೆ. ಮುಂದುವರಿಯಲು ನೀವು ಒಪ್ಪುತ್ತೀರಾ?",
+        dpdpa_yes_btn: "ಹೌದು",
+        dpdpa_no_btn: "ಇಲ್ಲ"
+    },
+    ml: {
+        page_title: "പുതിയ കണക്ഷൻ ഫോം",
+        heading: "പുതിയ കണക്ഷൻ ഫോം",
+        label_full_name: "മുഴുവൻ പേര്:",
+        label_email: "ഇമെയിൽ വിലാസം:",
+        label_phone: "ഫോൺ നമ്പർ:",
+        placeholder_phone: "10 അക്ക ഫോൺ നമ്പർ നൽകുക",
+        label_pan: "പാൻ കാർഡ്:",
+        placeholder_pan: "പാൻ നൽകുക (ഉദാ., JGAPS7106A)",
+        consent1_part1: "ഞാൻ ",
+        terms_link: "നിബന്ധനകളും വ്യവസ്ഥകളും",
+        consent1_part2: " ഒപ്പം ",
+        privacy_link: "സ്വകാര്യതാ നയം",
+        consent1_part3: " വായിച്ചു. എന്റെ അക്കൗണ്ട് തുറക്കൽ അപേക്ഷ പ്രോസസ്സ് ചെയ്യുന്നതിനും അനുബന്ധ സേവനങ്ങൾ നൽകുന്നതിനുമായി ACME Demo എന്റെ വ്യക്തിഗതവും സാമ്പത്തികവുമായ വിവരങ്ങൾ ശേഖരിക്കുന്നതിനും ഉപയോഗിക്കുന്നതിനും പ്രോസസ്സ് ചെയ്യുന്നതിനും പങ്കിടുന്നതിനും ഞാൻ വ്യക്തമായി സമ്മതം നൽകുന്നു.",
+        consent3: "താഴെ പറയുന്ന മാർഗങ്ങളിലൂടെ ACME Demo യും അതിന്റെ പ്രതിനിധികളും എന്നെ ബന്ധപ്പെടുന്നതിന് ഞാൻ സമ്മതിക്കുന്നു:",
+        channel_telephone: "ടെലിഫോൺ",
+        channel_sms: "എസ്എംഎസ്",
+        channel_email: "ഇമെയിൽ",
+        channel_whatsapp: "വാട്സാപ്പ്",
+        consent5: "എന്റെ അപേക്ഷ പ്രോസസ്സ് ചെയ്യുന്നതിനും സേവനങ്ങൾ നൽകുന്നതിനും നിയന്ത്രണ ബാധ്യതകൾ പാലിക്കുന്നതിനും ആവശ്യമായ കാലയളവ് വരെ എന്റെ ഡാറ്റ ACME Demo സൂക്ഷിക്കുമെന്ന് ഞാൻ മനസ്സിലാക്കുന്നു.",
+        consent6: "ഞാൻ പ്രായപൂർത്തിയായെന്നും ഇന്ത്യയിലെ താമസക്കാരനാണെന്നും/താമസക്കാരിയാണെന്നും ഞാൻ സ്ഥിരീകരിക്കുന്നു. മറ്റൊരു രാജ്യത്തിന്റെയും നികുതി താമസക്കാരനല്ലെന്നും രാഷ്ട്രീയമായി തുറന്നുകാട്ടപ്പെട്ട വ്യക്തി (PEP) അല്ലെന്നും ഞാൻ സ്ഥിരീകരിക്കുന്നു.",
+        guardian_tick_label: "ഞാൻ ഒരു പ്രായപൂർത്തിയാകാത്ത വ്യക്തിക്ക് വേണ്ടി സമ്മതം നൽകുന്ന രക്ഷിതാവാണ്.",
+        guardian_section_title: "രക്ഷിതാവ് / ഗാർഡിയൻ പരിശോധന",
+        guardian_section_ruleref: "അപേക്ഷകൻ പ്രായപൂർത്തിയാകാത്തയാളാണെങ്കിൽ മാത്രം ആവശ്യമാണ് (DPDP നിയമങ്ങൾ 2025, നിയമം 10)",
+        guardian_label_name: "രക്ഷിതാവിന്റെ മുഴുവൻ പേര്:",
+        guardian_placeholder_name: "രക്ഷിതാവിന്റെ മുഴുവൻ പേര് നൽകുക",
+        guardian_label_id_type: "തിരിച്ചറിയൽ തരം:",
+        guardian_option_select_id_type: "-- തിരിച്ചറിയൽ തരം തിരഞ്ഞെടുക്കുക --",
+        guardian_option_pan: "പാൻ",
+        guardian_option_aadhaar: "ആധാർ",
+        guardian_option_passport: "പാസ്‌പോർട്ട്",
+        guardian_option_voterid: "വോട്ടർ തിരിച്ചറിയൽ കാർഡ്",
+        guardian_option_dl: "ഡ്രൈവിംഗ് ലൈസൻസ്",
+        guardian_label_id_number: "തിരിച്ചറിയൽ നമ്പർ:",
+        guardian_placeholder_id_number: "തിരിച്ചറിയൽ നമ്പർ നൽകുക",
+        guardian_label_dob: "രക്ഷിതാവിന്റെ ജനനത്തീയതി:",
+        guardian_label_upload: "തിരിച്ചറിയൽ രേഖ അപ്‌ലോഡ് ചെയ്യുക (ഓപ്ഷണൽ, റെക്കോർഡിനായി):",
+        verify_guardian_btn: "രക്ഷിതാവിനെ പരിശോധിക്കുക",
+        submit_btn: "അപേക്ഷ സമർപ്പിക്കുക",
+        manage_preferences_btn: "മുൻഗണനകൾ നിയന്ത്രിക്കുക",
+        dpdpa_modal_text: "DPDPA (ഡിജിറ്റൽ പേഴ്‌സണൽ ഡാറ്റ പ്രൊട്ടക്ഷൻ ആക്ട്) നയങ്ങളിലെ സമീപകാല മാറ്റങ്ങളുടെ വെളിച്ചത്തിൽ, നിങ്ങളുടെ വ്യക്തിഗത ഡാറ്റ പ്രോസസ്സ് ചെയ്യുന്നതിനായി നിങ്ങളിൽ നിന്ന് ഒരു പുതിയ സമ്മതം ശേഖരിക്കുന്നു. തുടരാൻ നിങ്ങൾ സമ്മതിക്കുന്നുണ്ടോ?",
+        dpdpa_yes_btn: "അതെ",
+        dpdpa_no_btn: "ഇല്ല"
+    },
+    pa: {
+        page_title: "ਨਵਾਂ ਕਨੈਕਸ਼ਨ ਫਾਰਮ",
+        heading: "ਨਵਾਂ ਕਨੈਕਸ਼ਨ ਫਾਰਮ",
+        label_full_name: "ਪੂਰਾ ਨਾਮ:",
+        label_email: "ਈਮੇਲ ਪਤਾ:",
+        label_phone: "ਫ਼ੋਨ ਨੰਬਰ:",
+        placeholder_phone: "10 ਅੰਕਾਂ ਦਾ ਫ਼ੋਨ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+        label_pan: "ਪੈਨ ਕਾਰਡ:",
+        placeholder_pan: "ਪੈਨ ਦਰਜ ਕਰੋ (ਜਿਵੇਂ, JGAPS7106A)",
+        consent1_part1: "ਮੈਂ ",
+        terms_link: "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+        consent1_part2: " ਅਤੇ ",
+        privacy_link: "ਗੋਪਨੀਯਤਾ ਨੀਤੀ",
+        consent1_part3: " ਪੜ੍ਹ ਲਈ ਹੈ। ਮੈਂ ਆਪਣੀ ਖਾਤਾ ਖੋਲ੍ਹਣ ਦੀ ਅਰਜ਼ੀ ਦੀ ਪ੍ਰਕਿਰਿਆ ਕਰਨ ਅਤੇ ਸੰਬੰਧਿਤ ਸੇਵਾਵਾਂ ਪ੍ਰਦਾਨ ਕਰਨ ਲਈ ACME Demo ਦੁਆਰਾ ਮੇਰੇ ਨਿੱਜੀ ਅਤੇ ਵਿੱਤੀ ਡੇਟਾ ਨੂੰ ਇਕੱਠਾ ਕਰਨ, ਵਰਤਣ, ਪ੍ਰਕਿਰਿਆ ਕਰਨ ਅਤੇ ਸਾਂਝਾ ਕਰਨ ਲਈ ਸਪਸ਼ਟ ਤੌਰ 'ਤੇ ਸਹਿਮਤੀ ਦਿੰਦਾ/ਦਿੰਦੀ ਹਾਂ।",
+        consent3: "ਮੈਂ ਹੇਠਾਂ ਦਿੱਤੇ ਮਾਧਿਅਮਾਂ ਰਾਹੀਂ ACME Demo ਅਤੇ ਇਸਦੇ ਪ੍ਰਤੀਨਿਧੀਆਂ ਦੁਆਰਾ ਸੰਪਰਕ ਕੀਤੇ ਜਾਣ ਲਈ ਸਹਿਮਤ ਹਾਂ:",
+        channel_telephone: "ਟੈਲੀਫ਼ੋਨ",
+        channel_sms: "ਐੱਸਐੱਮਐੱਸ",
+        channel_email: "ਈਮੇਲ",
+        channel_whatsapp: "ਵਟਸਐਪ",
+        consent5: "ਮੈਂ ਸਮਝਦਾ/ਸਮਝਦੀ ਹਾਂ ਕਿ ਮੇਰਾ ਡੇਟਾ ACME Demo ਦੁਆਰਾ ਮੇਰੀ ਅਰਜ਼ੀ ਦੀ ਪ੍ਰਕਿਰਿਆ, ਸੇਵਾਵਾਂ ਪ੍ਰਦਾਨ ਕਰਨ ਅਤੇ ਰੈਗੂਲੇਟਰੀ ਜ਼ਿੰਮੇਵਾਰੀਆਂ ਦੀ ਪਾਲਣਾ ਲਈ ਲੋੜੀਂਦੀ ਮਿਆਦ ਲਈ ਰੱਖਿਆ ਜਾਵੇਗਾ।",
+        consent6: "ਮੈਂ ਪੁਸ਼ਟੀ ਕਰਦਾ/ਕਰਦੀ ਹਾਂ ਕਿ ਮੈਂ ਬਾਲਗ ਉਮਰ ਪ੍ਰਾਪਤ ਕਰ ਚੁੱਕਾ/ਚੁੱਕੀ ਹਾਂ ਅਤੇ ਭਾਰਤ ਦਾ ਨਿਵਾਸੀ ਹਾਂ। ਮੈਂ ਇਹ ਵੀ ਪੁਸ਼ਟੀ ਕਰਦਾ/ਕਰਦੀ ਹਾਂ ਕਿ ਮੈਂ ਕਿਸੇ ਹੋਰ ਦੇਸ਼ ਦਾ ਟੈਕਸ ਨਿਵਾਸੀ ਨਹੀਂ ਹਾਂ ਅਤੇ ਨਾ ਹੀ ਇੱਕ ਸਿਆਸੀ ਤੌਰ 'ਤੇ ਉਜਾਗਰ ਵਿਅਕਤੀ (PEP) ਹਾਂ।",
+        guardian_tick_label: "ਮੈਂ ਇੱਕ ਨਾਬਾਲਗ ਦੀ ਤਰਫ਼ੋਂ ਸਹਿਮਤੀ ਦੇਣ ਵਾਲਾ ਸਰਪ੍ਰਸਤ ਹਾਂ।",
+        guardian_section_title: "ਮਾਪੇ / ਸਰਪ੍ਰਸਤ ਤਸਦੀਕ",
+        guardian_section_ruleref: "ਸਿਰਫ਼ ਤਾਂ ਜ਼ਰੂਰੀ ਹੈ ਜੇਕਰ ਬਿਨੈਕਾਰ ਨਾਬਾਲਗ ਹੈ (DPDP ਨਿਯਮ 2025, ਨਿਯਮ 10)",
+        guardian_label_name: "ਸਰਪ੍ਰਸਤ ਦਾ ਪੂਰਾ ਨਾਮ:",
+        guardian_placeholder_name: "ਸਰਪ੍ਰਸਤ ਦਾ ਪੂਰਾ ਨਾਮ ਦਰਜ ਕਰੋ",
+        guardian_label_id_type: "ਪਛਾਣ ਦੀ ਕਿਸਮ:",
+        guardian_option_select_id_type: "-- ਪਛਾਣ ਦੀ ਕਿਸਮ ਚੁਣੋ --",
+        guardian_option_pan: "ਪੈਨ",
+        guardian_option_aadhaar: "ਆਧਾਰ",
+        guardian_option_passport: "ਪਾਸਪੋਰਟ",
+        guardian_option_voterid: "ਵੋਟਰ ਪਛਾਣ ਪੱਤਰ",
+        guardian_option_dl: "ਡਰਾਈਵਿੰਗ ਲਾਇਸੰਸ",
+        guardian_label_id_number: "ਪਛਾਣ ਨੰਬਰ:",
+        guardian_placeholder_id_number: "ਪਛਾਣ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+        guardian_label_dob: "ਸਰਪ੍ਰਸਤ ਦੀ ਜਨਮ ਮਿਤੀ:",
+        guardian_label_upload: "ਪਛਾਣ ਦਸਤਾਵੇਜ਼ ਅੱਪਲੋਡ ਕਰੋ (ਵਿਕਲਪਿਕ, ਰਿਕਾਰਡ ਲਈ):",
+        verify_guardian_btn: "ਸਰਪ੍ਰਸਤ ਦੀ ਤਸਦੀਕ ਕਰੋ",
+        submit_btn: "ਅਰਜ਼ੀ ਜਮ੍ਹਾਂ ਕਰੋ",
+        manage_preferences_btn: "ਪਸੰਦਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ",
+        dpdpa_modal_text: "DPDPA (ਡਿਜੀਟਲ ਪਰਸਨਲ ਡੇਟਾ ਪ੍ਰੋਟੈਕਸ਼ਨ ਐਕਟ) ਨੀਤੀਆਂ ਵਿੱਚ ਹਾਲੀਆ ਤਬਦੀਲੀਆਂ ਦੇ ਮੱਦੇਨਜ਼ਰ, ਤੁਹਾਡੇ ਨਿੱਜੀ ਡੇਟਾ ਦੀ ਪ੍ਰਕਿਰਿਆ ਲਈ ਤੁਹਾਡੇ ਤੋਂ ਇੱਕ ਨਵੀਂ ਸਹਿਮਤੀ ਲਈ ਜਾ ਰਹੀ ਹੈ। ਕੀ ਤੁਸੀਂ ਅੱਗੇ ਵਧਣ ਲਈ ਸਹਿਮਤ ਹੋ?",
+        dpdpa_yes_btn: "ਹਾਂ",
+        dpdpa_no_btn: "ਨਹੀਂ"
+    },
+    or: {
+        page_title: "ନୂଆ ସଂଯୋଗ ଫର୍ମ",
+        heading: "ନୂଆ ସଂଯୋଗ ଫର୍ମ",
+        label_full_name: "ପୂରା ନାମ:",
+        label_email: "ଇମେଲ୍ ଠିକଣା:",
+        label_phone: "ଫୋନ୍ ନମ୍ବର:",
+        placeholder_phone: "10 ଅଙ୍କ ବିଶିଷ୍ଟ ଫୋନ୍ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ",
+        label_pan: "ପାନ୍ କାର୍ଡ:",
+        placeholder_pan: "ପାନ୍ ପ୍ରବେଶ କରନ୍ତୁ (ଯଥା, JGAPS7106A)",
+        consent1_part1: "ମୁଁ ",
+        terms_link: "ନିୟମ ଓ ସର୍ତ୍ତାବଳୀ",
+        consent1_part2: " ଏବଂ ",
+        privacy_link: "ଗୋପନୀୟତା ନୀତି",
+        consent1_part3: " ପଢ଼ିଛି। ମୋର ଖାତା ଖୋଲିବା ଆବେଦନକୁ ପ୍ରକ୍ରିୟାକରଣ କରିବା ଏବଂ ପ୍ରାସଙ୍ଗିକ ସେବା ପ୍ରଦାନ କରିବା ପାଇଁ ACME Demo ଦ୍ୱାରା ମୋର ବ୍ୟକ୍ତିଗତ ଏବଂ ଆର୍ଥିକ ତଥ୍ୟ ସଂଗ୍ରହ, ବ୍ୟବହାର, ପ୍ରକ୍ରିୟାକରଣ ଏବଂ ବାଣ୍ଟିବା ପାଇଁ ମୁଁ ସ୍ପଷ୍ଟ ଭାବରେ ସହମତି ଦେଉଛି।",
+        consent3: "ନିମ୍ନଲିଖିତ ମାଧ୍ୟମ ମାଧ୍ୟମରେ ACME Demo ଏବଂ ଏହାର ପ୍ରତିନିଧିମାନଙ୍କ ଦ୍ୱାରା ଯୋଗାଯୋଗ କରାଯିବାକୁ ମୁଁ ସହମତ:",
+        channel_telephone: "ଟେଲିଫୋନ୍",
+        channel_sms: "ଏସ୍ଏମ୍ଏସ୍",
+        channel_email: "ଇମେଲ୍",
+        channel_whatsapp: "ହ୍ୱାଟସ୍ଆପ୍",
+        consent5: "ମୁଁ ବୁଝୁଛି ଯେ ମୋର ଆବେଦନକୁ ପ୍ରକ୍ରିୟାକରଣ, ସେବା ପ୍ରଦାନ ଏବଂ ନିୟାମକ ବାଧ୍ୟବାଧକତା ପାଳନ ପାଇଁ ଆବଶ୍ୟକ ଅବଧି ପର୍ଯ୍ୟନ୍ତ ମୋର ତଥ୍ୟ ACME Demo ଦ୍ୱାରା ସାଇତି ରଖାଯିବ।",
+        consent6: "ମୁଁ ନିଶ୍ଚିତ କରୁଛି ଯେ ମୁଁ ପ୍ରାପ୍ତ ବୟସ୍କ ହୋଇସାରିଛି ଏବଂ ଭାରତର ବାସିନ୍ଦା। ମୁଁ ଏହା ମଧ୍ୟ ନିଶ୍ଚିତ କରୁଛି ଯେ ମୁଁ ଅନ୍ୟ କୌଣସି ଦେଶର କର ବାସିନ୍ଦା ନୁହେଁ ଏବଂ ରାଜନୈତିକ ଭାବରେ ପ୍ରକାଶିତ ବ୍ୟକ୍ତି (PEP) ନୁହେଁ।",
+        guardian_tick_label: "ମୁଁ ଜଣେ ନାବାଳକ ପକ୍ଷରୁ ସହମତି ଦେଉଥିବା ଅଭିଭାବକ।",
+        guardian_section_title: "ପିତାମାତା / ଅଭିଭାବକ ଯାଞ୍ଚ",
+        guardian_section_ruleref: "ଆବେଦନକାରୀ ନାବାଳକ ହେଲେ ହିଁ ଆବଶ୍ୟକ (DPDP ନିୟମ 2025, ନିୟମ 10)",
+        guardian_label_name: "ଅଭିଭାବକଙ୍କ ପୂରା ନାମ:",
+        guardian_placeholder_name: "ଅଭିଭାବକଙ୍କ ପୂରା ନାମ ପ୍ରବେଶ କରନ୍ତୁ",
+        guardian_label_id_type: "ପରିଚୟ ପ୍ରକାର:",
+        guardian_option_select_id_type: "-- ପରିଚୟ ପ୍ରକାର ବାଛନ୍ତୁ --",
+        guardian_option_pan: "ପାନ୍",
+        guardian_option_aadhaar: "ଆଧାର",
+        guardian_option_passport: "ପାସପୋର୍ଟ",
+        guardian_option_voterid: "ଭୋଟର ପରିଚୟ ପତ୍ର",
+        guardian_option_dl: "ଡ୍ରାଇଭିଂ ଲାଇସେନ୍ସ",
+        guardian_label_id_number: "ପରିଚୟ ନମ୍ବର:",
+        guardian_placeholder_id_number: "ପରିଚୟ ନମ୍ବର ପ୍ରବେଶ କରନ୍ତୁ",
+        guardian_label_dob: "ଅଭିଭାବକଙ୍କ ଜନ୍ମ ତାରିଖ:",
+        guardian_label_upload: "ପରିଚୟ ଦଲିଲ ଅପଲୋଡ୍ କରନ୍ତୁ (ଇଚ୍ଛାଧୀନ, ରେକର୍ଡ ପାଇଁ):",
+        verify_guardian_btn: "ଅଭିଭାବକଙ୍କୁ ଯାଞ୍ଚ କରନ୍ତୁ",
+        submit_btn: "ଆବେଦନ ଦାଖଲ କରନ୍ତୁ",
+        manage_preferences_btn: "ପସନ୍ଦ ପରିଚାଳନା କରନ୍ତୁ",
+        dpdpa_modal_text: "DPDPA (ଡିଜିଟାଲ ବ୍ୟକ୍ତିଗତ ତଥ୍ୟ ସୁରକ୍ଷା ଅଧିନିୟମ) ନୀତିରେ ସାମ୍ପ୍ରତିକ ପରିବର୍ତ୍ତନ ଦୃଷ୍ଟିରେ, ଆପଣଙ୍କ ବ୍ୟକ୍ତିଗତ ତଥ୍ୟ ପ୍ରକ୍ରିୟାକରଣ ପାଇଁ ଆପଣଙ୍କଠାରୁ ଏକ ନୂଆ ସହମତି ସଂଗ୍ରହ କରାଯାଉଛି। ଆପଣ ଆଗକୁ ବଢିବାକୁ ସହମତ କି?",
+        dpdpa_yes_btn: "ହଁ",
+        dpdpa_no_btn: "ନା"
+    }
+};
+
+// Applies the selected language to every element carrying a data-i18n /
+// data-i18n-placeholder attribute. Falls back to English if a key is missing.
+function applyLanguage(langCode) {
+    var dict = TRANSLATIONS[langCode] || TRANSLATIONS.en;
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        var text = dict[key] || TRANSLATIONS.en[key];
+        if (text !== undefined) {
+            el.textContent = text;
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n-placeholder');
+        var text = dict[key] || TRANSLATIONS.en[key];
+        if (text !== undefined) {
+            el.setAttribute('placeholder', text);
+        }
+    });
+}
+
+// Switch language when the dropdown changes, and apply the default (English) on load
+document.getElementById('languageSelect').addEventListener('change', function () {
+    applyLanguage(this.value);
+});
+applyLanguage('en');
+
+// Guardian consent tick: show/hide the Parent / Guardian Verification section
+document.getElementById('minorConsentCheckbox').addEventListener('change', function () {
+    var guardianSection = document.getElementById('guardianSection');
+    guardianSection.style.display = this.checked ? 'block' : 'none';
+    updateSubmitButtonGreyState();
+});
+
+// Parent / Guardian Verification logic
+// DPDP Rules 2025, Rule 10(1)(b)(i) - identity and age details voluntarily provided by the individual
+function calculateAge(dobString) {
+    var dob = new Date(dobString);
+    var today = new Date();
+    var age = today.getFullYear() - dob.getFullYear();
+    var monthDiff = today.getMonth() - dob.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+// Basic format checks for supported ID types
+var ID_PATTERNS = {
+    PAN: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+    Aadhaar: /^[0-9]{12}$/
+};
+
+document.getElementById('verifyGuardianBtn').addEventListener('click', function () {
+    var name = document.getElementById('guardian_name').value.trim();
+    var idType = document.getElementById('guardian_id_type').value;
+    var idNumber = document.getElementById('guardian_id_number').value.trim();
+    var dobValue = document.getElementById('guardian_dob').value;
+    var uploadedFile = document.getElementById('guardian_id_upload').files[0];
+    // Due diligence: all core fields are required before treating this as verifiable consent
+    if (!name) {
+        alert('Please enter the guardian\'s full name.');
+        return;
+    }
+    if (!idType) {
+        alert('Please select the guardian\'s ID type.');
+        return;
+    }
+    if (!idNumber) {
+        alert('Please enter the guardian\'s ID number.');
+        return;
+    }
+    if (ID_PATTERNS[idType] && !ID_PATTERNS[idType].test(idNumber.toUpperCase())) {
+        alert('The ' + idType + ' number entered does not appear to be in a valid format. Please check and re-enter.');
+        return;
+    }
+    if (!dobValue) {
+        alert('Please enter the guardian\'s date of birth.');
+        return;
+    }
+    var guardianAge = calculateAge(dobValue);
+    if (guardianAge < 18) {
+        alert('The details provided indicate the guardian is under 18. A guardian must be an identifiable adult (18 years or older) to provide verifiable consent on behalf of a minor, as required under Rule 10 of the DPDP Rules, 2025.');
+        return;
+    }
+    var recordNote = uploadedFile ? (' ID document "' + uploadedFile.name + '" has been attached as a supporting record.') : ' No ID document was attached; consider uploading one for a stronger audit record.';
+    alert('Guardian verified as an identifiable adult (age ' + guardianAge + '). Verifiable consent on behalf of the minor can proceed.' + recordNote);
+});
+
+// Re-check the Submit button grey-out state whenever the guardian DOB changes
+document.getElementById('guardian_dob').addEventListener('change', updateSubmitButtonGreyState);
+
+// Submit Application grey-out logic:
+// - Only applies when the guardian tick is checked.
+// - If checked AND guardian's DOB indicates under 18 -> grey out / disable Submit.
+// - If the tick is NOT checked, Submit is never greyed out, regardless of anything else.
+function updateSubmitButtonGreyState() {
+    var submitBtn = document.getElementById('submitBtn');
+    var isGuardianTicked = document.getElementById('minorConsentCheckbox').checked;
+    var dobValue = document.getElementById('guardian_dob').value;
+
+    if (isGuardianTicked && dobValue) {
+        var guardianAge = calculateAge(dobValue);
+        if (guardianAge < 18) {
+            submitBtn.classList.add('submit-greyed');
+            submitBtn.disabled = true;
+            return;
+        }
+    }
+
+    submitBtn.classList.remove('submit-greyed');
+    submitBtn.disabled = false;
+}
+
+// Set the initial Submit button state on page load
+updateSubmitButtonGreyState();
+
+// Intercept the form submit to show the DPDPA re-consent confirmation popup first.
+// The actual Securiti submission only happens if the user clicks "Yes".
+document.querySelector('form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    document.getElementById('dpdpaModal').classList.add('active');
+});
+
+document.getElementById('dpdpaNoBtn').addEventListener('click', function () {
+    document.getElementById('dpdpaModal').classList.remove('active');
+});
+
+document.getElementById('dpdpaYesBtn').addEventListener('click', async function () {
+    document.getElementById('dpdpaModal').classList.remove('active');
+    await submitConsentToSecuriti();
+});
+
+// Builds the consent payload and sends it to the Securiti.ai proxy.
+// This runs only after the user confirms "Yes" on the DPDPA re-consent popup.
+async function submitConsentToSecuriti() {
+    // 1. Capture Form Details
+    const emailValue = document.getElementById('email').value;
+    const phoneValue = document.getElementById('phone').value;
+    const full_nameValue = document.getElementById('full_name').value;
+    const pancardValue = document.getElementById('pan_card').value;
+    const preferredLanguage = document.getElementById('languageSelect').value;
+    // 2. Capture Checkbox States (Returns true if checked, false if not)
+    const TandCGranted = document.getElementById('consent1').checked; // Terms & Privacy
+    const AllChannelsGranted = document.getElementById('consent3').checked; // Master Communication Consent
+    const DataretentionGranted = document.getElementById('consent5').checked; // Data Retention
+    const ResidentConfirmationGranted = document.getElementById('consent6').checked; // Resident & Age Confirmation
+    const GuardianConsentGranted = document.getElementById('minorConsentCheckbox').checked; // Guardian consenting on behalf of a minor
+    // Channel Communication Logic:
+    const phoneChannelGranted = AllChannelsGranted || document.getElementById('channel1').checked;
+    const smsChannelGranted = AllChannelsGranted || document.getElementById('channel2').checked;
+    const emailChannelGranted = AllChannelsGranted || document.getElementById('channel3').checked;
+    const whatsappChannelGranted = AllChannelsGranted || document.getElementById('channel4').checked;
+    // Parent / Guardian Verification details (DPDP Rules 2025, Rule 10) - captured only when the guardian tick is checked
+    const guardianNameValue = GuardianConsentGranted ? document.getElementById('guardian_name').value : '';
+    const guardianIdTypeValue = GuardianConsentGranted ? document.getElementById('guardian_id_type').value : '';
+    const guardianIdNumberValue = GuardianConsentGranted ? document.getElementById('guardian_id_number').value : '';
+    const guardianDobValue = GuardianConsentGranted ? document.getElementById('guardian_dob').value : '';
+    const guardianIdUploadFile = document.getElementById('guardian_id_upload').files[0];
+    const guardianIdDocumentName = (GuardianConsentGranted && guardianIdUploadFile) ? guardianIdUploadFile.name : '';
+    // 3. Construct the API Payload (Aligned with working test script)
+    const payload = {
+        "UUID": emailValue,
+        "uuids": {
+            "email": emailValue,
+            "phone": phoneValue,
+            "full_name": full_nameValue,
+            "pan_card": pancardValue,
+            "preferred_language": preferredLanguage,
+            "guardian_name": guardianNameValue,
+            "guardian_id_type": guardianIdTypeValue,
+            "guardian_id_number": guardianIdNumberValue,
+            "guardian_dob": guardianDobValue,
+            "guardian_id_document": guardianIdDocumentName
+        },
+        "activity_timestamp": Math.floor(Date.now() / 1000),
+        "consent_source": "ACME Demo WebForm",
+        "consent_info": [
+            {
+                "processing_purpose_name": "Account Opening",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Terms and Privacy Policy",
+                        "consent_granted": TandCGranted
+                    },
+                    {
+                        "consent_purpose_name": "Resident and Age Confirmation",
+                        "consent_granted": ResidentConfirmationGranted
+                    }
+                ]
+            },
+            {
+                "processing_purpose_name": "Data Lifecycle Management",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Data Retention Policy",
+                        "consent_granted": DataretentionGranted
+                    }
+                ]
+            },
+            {
+                "processing_purpose_name": "Minor / Guardian Consent",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Guardian Consenting on Behalf of Minor",
+                        "consent_granted": GuardianConsentGranted,
+                        "guardian_details": {
+                            "guardian_name": guardianNameValue,
+                            "guardian_id_type": guardianIdTypeValue,
+                            "guardian_id_number": guardianIdNumberValue,
+                            "guardian_dob": guardianDobValue,
+                            "guardian_id_document": guardianIdDocumentName
+                        }
+                    }
+                ]
+            },
+            {
+                "processing_purpose_name": "Marketing Communication",
+                "consented_items": [
+                    {
+                        "consent_purpose_name": "Telephone",
+                        "consent_granted": phoneChannelGranted
+                    },
+                    {
+                        "consent_purpose_name": "SMS",
+                        "consent_granted": smsChannelGranted
+                    },
+                    {
+                        "consent_purpose_name": "Email",
+                        "consent_granted": emailChannelGranted
+                    },
+                    {
+                        "consent_purpose_name": "WhatsApp",
+                        "consent_granted": whatsappChannelGranted
+                    }
+                ]
+            }
+        ]
+    };
+    // 4. Make the API Call to Securiti.ai directly (Headers aligned with working test script)
+    try {
+        const response = await fetch('https://app.securiti.ai/privaci/v1/consentapi/consent_upload', {
+            method: 'POST',
+            headers: {
+                'X-API-Key': 'GYsPcqTmOKEXcXq7M15ElbXOsga80rk0W367rmk9',
+                'X-API-Secret': '85fzFjPye5XzO8yjXLsa9bP0Ol3zcPjl5Yd17bXM',
+                'X-TIDENT': '09f99b07-9b72-4dd3-b6b5-1009a96c2fd4',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Consent successfully uploaded:', result);
+            alert("Application submitted successfully!");
+        } else {
+            console.error('API Error:', response.status, await response.text());
+            alert("There was an error submitting your application.");
+        }
+    } catch (error) {
+        console.error('Fetch Error:', error);
+    }
+}
+</script>
+</body>
+</html>
